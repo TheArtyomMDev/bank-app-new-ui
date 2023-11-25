@@ -1,4 +1,6 @@
 # coding:utf-8
+import datetime
+
 from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QPixmap, QPainter, QColor, QBrush, QPainterPath, QLinearGradient
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidgetItem, QListWidget
@@ -158,11 +160,29 @@ class HomeInterface(ScrollArea):
 
         self.transactionList = ListWidget()
         self.transactionList.setSpacing(5)
-        for i in range(10):
+
+        all_trans = api.get_transactions()
+
+        transactions = []
+        for elem in all_trans["sender"]:
+            elem["type"] = "sender"
+            transactions.append(elem)
+
+        for elem in all_trans["receiver"]:
+            elem["type"] = "receiver"
+            transactions.append(elem)
+
+        for elem in transactions:
             item = QListWidgetItem()
             self.transactionList.addItem(item)
 
-            card = TransactionCard("+ 50 $", "@john_the_mad")
+            if elem["type"] == "sender":
+                prefix = "-"
+            else:
+                prefix = "+"
+
+            date = datetime.datetime.fromtimestamp(elem["time"]).strftime("%Y-%m-%d %H:%M:%S")
+            card = TransactionCard(f"{prefix} {elem['amount']}", date)
             self.transactionList.setItemWidget(item, card)
 
         # self.transactionList.setContentsMargins(40, 40, 40, 40)

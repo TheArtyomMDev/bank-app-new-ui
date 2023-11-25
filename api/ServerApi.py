@@ -23,6 +23,11 @@ class ServerApi:
         print(res)
         return res["data"]
 
+    def get_transactions(self):
+        res = self.exec_request("/transactions", "GET")
+        print(res)
+        return res["data"]
+
     @passcode_setup
     def login(self, email, password, onLogged, onFailed, passcode):
         res = self.exec_request("/signin", "POST", {
