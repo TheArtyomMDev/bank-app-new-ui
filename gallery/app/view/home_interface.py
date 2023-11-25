@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QPixmap, QPainter, QColor, QBrush, QPainterPath, QLinearGradient
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidgetItem, QListWidget
 
-from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon, BodyLabel, TitleLabel, ListWidget
+from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon, BodyLabel, TitleLabel, ListWidget, Flyout, InfoBarIcon
 
 from api.ServerApi import ServerApi
 from ..common.config import cfg, HELP_URL, REPO_URL, EXAMPLE_URL, FEEDBACK_URL
@@ -15,7 +15,11 @@ from ..components.sample_card import SampleCardView, SampleCard
 from ..common.style_sheet import StyleSheet
 from ..components.transaction_card import TransactionCard
 
+
+
 api = ServerApi()
+
+
 class BannerWidget(QWidget):
     """ Banner widget """
 
@@ -99,9 +103,9 @@ class BannerWidget(QWidget):
         path.setFillRule(Qt.WindingFill)
         w, h = self.width(), self.height()
         path.addRoundedRect(QRectF(0, 0, w, h), 10, 10)
-        path.addRect(QRectF(0, h-50, 50, 50))
-        path.addRect(QRectF(w-50, 0, 50, 50))
-        path.addRect(QRectF(w-50, h-50, 50, 50))
+        path.addRect(QRectF(0, h - 50, 50, 50))
+        path.addRect(QRectF(w - 50, 0, 50, 50))
+        path.addRect(QRectF(w - 50, h - 50, 50, 50))
         path = path.simplified()
 
         # init linear gradient effect
@@ -114,7 +118,7 @@ class BannerWidget(QWidget):
         else:
             gradient.setColorAt(0, QColor(0, 0, 0, 255))
             gradient.setColorAt(1, QColor(0, 0, 0, 0))
-            
+
         painter.fillPath(path, QBrush(gradient))
 
         # draw banner image
@@ -182,7 +186,8 @@ class HomeInterface(ScrollArea):
                 prefix = "+"
 
             date = datetime.datetime.fromtimestamp(elem["time"]).strftime("%Y-%m-%d %H:%M:%S")
-            card = TransactionCard(f"{prefix} {elem['amount']}", date)
+            card = TransactionCard(f"{prefix} {elem['amount']}", date, elem["message"])
+
             self.transactionList.setItemWidget(item, card)
 
         # self.transactionList.setContentsMargins(40, 40, 40, 40)
@@ -203,7 +208,6 @@ class HomeInterface(ScrollArea):
         #     routeKey="basicInputInterface",
         #     index=0
         # )
-
 
         '''
         basicInputView = SampleCardView(

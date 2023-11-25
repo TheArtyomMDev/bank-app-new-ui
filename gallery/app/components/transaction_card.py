@@ -1,15 +1,17 @@
+from PyQt5 import QtGui
 from PyQt5.QtCore import QUrl, Qt
 from PyQt5.QtGui import QDesktopServices
-from PyQt5.QtWidgets import QLabel, QFrame, QVBoxLayout, QHBoxLayout
-from qfluentwidgets import TextWrap, FluentIcon
-from qfluentwidgets.components.widgets.flyout import IconWidget
+from PyQt5.QtWidgets import QLabel, QFrame, QVBoxLayout, QHBoxLayout, QWidget
+from qfluentwidgets import TextWrap, FluentIcon, InfoBarIcon
+from qfluentwidgets.components.widgets.flyout import IconWidget, Flyout
 
 from gallery.app.common.style_sheet import StyleSheet
 
+from qfluentwidgets import FluentIcon as FIF
 
 class TransactionCard(QFrame):
 
-    def __init__(self, amount, sender, parent=None):
+    def __init__(self, amount, sender, message, parent=None):
         super().__init__(parent=parent)
         self.setFixedHeight(120)
         # self.iconWidget = IconWidget(icon, self)
@@ -17,6 +19,7 @@ class TransactionCard(QFrame):
         self.senderLabel = QLabel(sender, self)
         # self.urlWidget = IconWidget(FluentIcon.LINK, self)
 
+        self.message = message
         self.__initWidget()
 
     def __initWidget(self):
@@ -40,4 +43,18 @@ class TransactionCard(QFrame):
         self.amountLabel.setObjectName('titleLabel')
         self.senderLabel.setObjectName('titleLabel')
 
+        self.view = QWidget(self)
+
         StyleSheet.TRANSACTION_CARD.apply(self)
+
+    def mouseReleaseEvent(self, a0: QtGui.QMouseEvent):
+        self.showFlyout()
+
+    def showFlyout(self):
+        Flyout.create(
+            icon=FIF.MESSAGE,
+            title='Message:',
+            content=self.message,
+            target=self.view,
+            parent=self.view
+        )
