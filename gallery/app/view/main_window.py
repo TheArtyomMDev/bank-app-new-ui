@@ -27,7 +27,6 @@ from ..common.config import SUPPORT_URL, cfg
 from ..common.icon import Icon
 from ..common.signal_bus import signalBus
 from ..common.translator import Translator
-from ..common import resource
 
 
 class MainWindow(FluentWindow):
