@@ -1,18 +1,20 @@
-from PyQt5.QtCore import Qt, QEvent
+from BlurWindow.blurWindow import blur
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QKeyEvent
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QLabel, QHBoxLayout, QSizePolicy, QPushButton
-
-from qfluentwidgets import PasswordLineEdit, LineEdit, PrimaryPushButton, BodyLabel, TitleLabel
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
+from qfluentwidgets import LineEdit, PrimaryPushButton, TitleLabel
 
 from gallery.app.common.style_sheet import StyleSheet
-from BlurWindow.blurWindow import blur
+
 
 class PasscodeWidget(QWidget):
     passcode = ""
     pass_fields: list[LineEdit] = []
 
-    def __init__(self):
+    def __init__(self, onPasscodeEntered):
         super().__init__()
+
+        self.onPasscodeEntered = onPasscodeEntered
 
         self.setFixedSize(400, 200)
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowCloseButtonHint)
@@ -71,4 +73,4 @@ class PasscodeWidget(QWidget):
         print(self.passcode)
 
         if len(self.passcode) == 4:
-            pass
+            self.onPasscodeEntered(self.passcode)

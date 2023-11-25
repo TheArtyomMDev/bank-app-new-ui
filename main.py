@@ -27,7 +27,7 @@ QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
 
 app = QApplication(sys.argv)
 
-w = PasscodeWidget() #LoginWindow() # MainWindow()
+w = LoginWindow() #PasscodeWidget() # # MainWindow()
 w.show()
 
 app.exec_()

@@ -1,5 +1,9 @@
+import asyncio
+
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QLabel
 from qfluentwidgets import PasswordLineEdit, LineEdit, PrimaryPushButton, BodyLabel
+
+from api.ServerApi import ServerApi
 
 
 class LoginWidget(QWidget):
@@ -24,10 +28,17 @@ class LoginWidget(QWidget):
         lay.addSpacing(50)
 
         self.btn_login = PrimaryPushButton('Login')
-        self.btn_login.clicked.connect(self.set_error)
+        self.btn_login.clicked.connect(lambda: self.login(email.text(), password.text()))
         lay.addWidget(self.btn_login)
 
         self.setLayout(lay)
 
     def set_error(self):
         self.error.setText("Error")
+
+    def login(self, email, password):
+        async def main():
+            result = ServerApi().login(email, password)
+            print("Got result:", result)
+
+        asyncio.run(main())
