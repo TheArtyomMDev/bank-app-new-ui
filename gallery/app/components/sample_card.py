@@ -22,12 +22,12 @@ class SampleCard(CardWidget):
         self.titleLabel = QLabel(title, self)
         self.contentLabel = QLabel(TextWrap.wrap(content, 28, False)[0], self)
 
-        self.iconWidget.setFixedSize(54, 54)
+        self.iconWidget.setFixedSize(120, 120)
 
         self.vBoxLayout = QVBoxLayout(self)
         self.vBoxLayout.setSpacing(0)
         self.vBoxLayout.setContentsMargins(24, 24, 0, 13)
-        self.vBoxLayout.addWidget(self.iconWidget)
+        self.vBoxLayout.addWidget(self.iconWidget, alignment=Qt.AlignCenter)
         self.vBoxLayout.addSpacing(16)
         self.vBoxLayout.addWidget(self.titleLabel)
         self.vBoxLayout.addSpacing(8)

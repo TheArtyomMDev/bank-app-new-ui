@@ -52,6 +52,7 @@
         <file>images/controls/MediaPlayerElement.png</file>
         <file>images/controls/MenuBar.png</file>
         <file>images/controls/MenuFlyout.png</file>
+        <file>images/controls/Money.png</file>
         <file>images/controls/NavigationView.png</file>
         <file>images/controls/NumberBox.png</file>
         <file>images/controls/PageTransition.png</file>
@@ -81,6 +82,7 @@
         <file>images/controls/SplitView.png</file>
         <file>images/controls/StackPanel.png</file>
         <file>images/controls/StandardUICommand.png</file>
+        <file>images/controls/Stats.png</file>
         <file>images/controls/SwipeControl.png</file>
         <file>images/controls/TabView.png</file>
         <file>images/controls/TeachingTip.png</file>

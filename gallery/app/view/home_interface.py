@@ -38,14 +38,14 @@ class BannerWidget(QWidget):
         basicInputView = SampleCardView(
             self.tr("Quick Actions"), self.view)
         basicInputView.addSampleCard(
-            icon=":/gallery/images/controls/Button.png",
-            title="Money",
-            content=self.tr("Transfer money"),
+            icon=":/gallery/images/controls/Money.png",
+            title="Transfer money",
+            content=self.tr("Just 2 clicks to get it done!"),
             routeKey="transferInputInterface",
             index=0
         )
         basicInputView.addSampleCard(
-            icon=":/gallery/images/controls/Button.png",
+            icon=":/gallery/images/controls/Stats.png",
             title="Exchange rates",
             content=self.tr("Wanna buy those green sheets?"),
             routeKey="basicInputInterface",
