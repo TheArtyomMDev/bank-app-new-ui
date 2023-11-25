@@ -11,24 +11,15 @@ from login.screens.Login import LoginWidget
 
 class LoginWindow(QWidget):
 
-    def __init__(self):
+    def __init__(self, onLogged):
         super().__init__()
-        # setTheme(Theme.DARK)
-        # self.setStyleSheet("""
-        #     Demo{background: white}
-        #     QLabel{
-        #         font: 20px 'Segoe UI';
-        #         background: rgb(242,242,242);
-        #         border-radius: 8px;
-        #     }
-        # """)
         self.resize(400, 400)
 
         self.pivot = SegmentedWidget(self)
         self.stackedWidget = QStackedWidget(self)
         self.vBoxLayout = QVBoxLayout(self)
 
-        self.songInterface = LoginWidget()
+        self.songInterface = LoginWidget(onLogged)
         self.albumInterface = QLabel('Album Interface', self)
 
         # add items to pivot
@@ -61,13 +52,13 @@ class LoginWindow(QWidget):
         self.pivot.setCurrentItem(widget.objectName())
 
 
-if __name__ == '__main__':
-    # enable dpi scale
-    QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
-
-    app = QApplication(sys.argv)
-    w = LoginWindow()
-    w.show()
-    app.exec_()
+# if __name__ == '__main__':
+#     # enable dpi scale
+#     QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
+#     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
+#     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
+#
+#     app = QApplication(sys.argv)
+#     w = LoginWindow()
+#     w.show()
+#     app.exec_()

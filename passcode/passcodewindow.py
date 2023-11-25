@@ -10,7 +10,7 @@ from gallery.app.common.style_sheet import StyleSheet
 class PasscodeWidget(QWidget):
 
 
-    def __init__(self, onPasscodeEntered):
+    def __init__(self, help_text: str, onPasscodeEntered):
         super().__init__()
 
         self.passcode = ""
@@ -24,7 +24,7 @@ class PasscodeWidget(QWidget):
         main_layout = QVBoxLayout(self)
         main_layout.setAlignment(Qt.AlignCenter | Qt.AlignmentFlag.AlignVCenter)
 
-        label = TitleLabel("Confirmation required")
+        label = TitleLabel(help_text)
         label.setAlignment(Qt.AlignCenter)
         main_layout.addWidget(label)
 
@@ -47,7 +47,7 @@ class PasscodeWidget(QWidget):
         main_layout.addSpacing(20)
         cancel = PrimaryPushButton("Cancel")
         cancel.setMaximumWidth(100)
-        cancel.clicked.connect(lambda: self.close())
+        cancel.clicked.connect(lambda: self.destroy())
         main_layout.addWidget(cancel, alignment=Qt.AlignCenter)
 
         self.setObjectName('view')

@@ -8,8 +8,10 @@ from passcode.passcodewindow import PasscodeWidget
 
 
 class LoginWidget(QWidget):
-    def __init__(self):
+    def __init__(self, onLogged):
         super().__init__()
+
+        self.onLogged = onLogged
 
         lay = QVBoxLayout()
 
@@ -38,6 +40,5 @@ class LoginWidget(QWidget):
         self.error.setText("Error")
 
     def login(self, email, password):
-
-        ServerApi().login(email, password)
+        ServerApi().login(email, password, self.onLogged)
 

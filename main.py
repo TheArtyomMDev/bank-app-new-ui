@@ -2,8 +2,8 @@
 
 import pyqt5ac
 
+from helpers.ConfigManager import ConfigManager
 from login.loginwindow import LoginWindow
-from passcode.passcodewindow import PasscodeWidget
 
 pyqt5ac.main(uicOptions='--from-imports', force=False, initPackage=True, ioPaths=[
     # ['gui/*.ui', 'generated/%%FILENAME%%_ui.py'],
@@ -18,7 +18,6 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication
 
 from gallery.app.view.main_window import MainWindow
-
 from gallery.app.common import resource
 
 QApplication.setHighDpiScaleFactorRoundingPolicy(
@@ -27,7 +26,17 @@ QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
 
 app = QApplication(sys.argv)
 
-w = LoginWindow() #PasscodeWidget() # # MainWindow()
+
+def onLogged():
+    MainWindow().show()
+
+config = ConfigManager()
+
+if config.is_logged():
+    w = MainWindow()
+else:
+    w = LoginWindow(onLogged)  # PasscodeWidget() # # MainWindow()
+
 w.show()
 
 app.exec_()

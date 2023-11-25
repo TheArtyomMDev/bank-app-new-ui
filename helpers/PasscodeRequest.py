@@ -14,7 +14,7 @@ def passcode_setup(f):
             print("Here: " + passcode)
             f(passcode=passcode, *args, **kwargs)
 
-        w = PasscodeWidget(onPasscodeEntered)
+        w = PasscodeWidget("Enter new passcode", onPasscodeEntered)
         w.show()
 
     return decorator
