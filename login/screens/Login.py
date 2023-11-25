@@ -1,11 +1,12 @@
-import asyncio
-
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QLabel
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
+from email_validator import validate_email, EmailNotValidError
 from qfluentwidgets import PasswordLineEdit, LineEdit, PrimaryPushButton, BodyLabel
 
 from api.ServerApi import ServerApi
-from passcode.passcodewindow import PasscodeWidget
 
+
+class PasswordNotValidError(Exception):
+    pass
 
 class LoginWidget(QWidget):
     def __init__(self, onLogged):
@@ -36,9 +37,28 @@ class LoginWidget(QWidget):
 
         self.setLayout(lay)
 
-    def set_error(self):
-        self.error.setText("Error")
+    def set_error(self, error):
+        self.error.setText(error)
+
+        if error == "":
+            self.error.setVisible(False)
+        else:
+            self.error.setVisible(True)
 
     def login(self, email, password):
-        ServerApi().login(email, password, self.onLogged)
+        try:
+            validate_email(email, check_deliverability=False)
+
+            if len(password) < 6:
+                raise PasswordNotValidError("Password must be at least 6 characters long")
+
+            self.set_error("")
+            ServerApi().login(email, password, self.onLogged)
+        except EmailNotValidError as e:
+            self.set_error(str(e))
+        except PasswordNotValidError as e:
+            self.set_error(str(e))
+
+
+
 

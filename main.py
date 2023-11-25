@@ -28,6 +28,7 @@ app = QApplication(sys.argv)
 
 
 def onLogged():
+    config.set_token("my_new_token")
     MainWindow().show()
 
 config = ConfigManager()

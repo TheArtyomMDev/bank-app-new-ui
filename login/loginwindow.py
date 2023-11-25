@@ -15,11 +15,16 @@ class LoginWindow(QWidget):
         super().__init__()
         self.resize(400, 400)
 
+        def onMyLogged():
+            print("Here Logged")
+            onLogged()
+            self.destroy()
+
         self.pivot = SegmentedWidget(self)
         self.stackedWidget = QStackedWidget(self)
         self.vBoxLayout = QVBoxLayout(self)
 
-        self.songInterface = LoginWidget(onLogged)
+        self.songInterface = LoginWidget(onMyLogged)
         self.albumInterface = QLabel('Album Interface', self)
 
         # add items to pivot
