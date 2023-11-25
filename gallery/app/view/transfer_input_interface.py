@@ -32,12 +32,12 @@ class TransferMoneyInputInterface(GalleryInterface):
             subtitle="",
             parent=parent
         )
-        self.setObjectName('basicInputInterface')
+        self.setObjectName('transferInputInterface')
 
         lineEdit = SearchLineEdit(self)
         lineEdit.setPlaceholderText(self.tr('Receiver'))
         lineEdit.setClearButtonEnabled(True)
-        lineEdit.setFixedWidth(230)
+        lineEdit.setFixedWidth(300)
         lineEdit.textChanged.connect(lambda: print(lineEdit.text()))
 
         stands = [
@@ -409,18 +409,18 @@ class TransferMoneyInputInterface(GalleryInterface):
         )
         '''
 
-    def onSwitchCheckedChanged(self, isChecked):
-        if isChecked:
-            self.switchButton.setText(self.tr('On'))
-        else:
-            self.switchButton.setText(self.tr('Off'))
-
-    def createStandMenu(self, button):
-        menu = RoundMenu(parent=self)
-        menu.addActions([
-            Action(self.tr('Star Platinum'), triggered=lambda c, b=button: b.setText(self.tr('Star Platinum'))),
-            Action(self.tr('Crazy Diamond'), triggered=lambda c, b=button: b.setText(self.tr('Crazy Diamond'))),
-            Action(self.tr("Gold Experience"), triggered=lambda c, b=button: b.setText(self.tr("Gold Experience"))),
-            Action(self.tr('Sticky Fingers'), triggered=lambda c, b=button: b.setText(self.tr('Sticky Fingers'))),
-        ])
-        return menu
+    # def onSwitchCheckedChanged(self, isChecked):
+    #     if isChecked:
+    #         self.switchButton.setText(self.tr('On'))
+    #     else:
+    #         self.switchButton.setText(self.tr('Off'))
+    #
+    # def createStandMenu(self, button):
+    #     menu = RoundMenu(parent=self)
+    #     menu.addActions([
+    #         Action(self.tr('Star Platinum'), triggered=lambda c, b=button: b.setText(self.tr('Star Platinum'))),
+    #         Action(self.tr('Crazy Diamond'), triggered=lambda c, b=button: b.setText(self.tr('Crazy Diamond'))),
+    #         Action(self.tr("Gold Experience"), triggered=lambda c, b=button: b.setText(self.tr("Gold Experience"))),
+    #         Action(self.tr('Sticky Fingers'), triggered=lambda c, b=button: b.setText(self.tr('Sticky Fingers'))),
+    #     ])
+    #     return menu

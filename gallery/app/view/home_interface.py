@@ -30,7 +30,7 @@ class BannerWidget(QWidget):
             icon=":/gallery/images/controls/Button.png",
             title="Money",
             content=self.tr("Transfer money"),
-            routeKey="basicInputInterface",
+            routeKey="transferInputInterface",
             index=0
         )
         basicInputView.addSampleCard(
