@@ -3,10 +3,10 @@ import os
 
 
 class ConfigManager:
-    CONFIG_NAME = "config.txt"
+    CONFIG_NAME = "config.json"
 
     def __init__(self):
-        if not os.path.isfile("config.txt"):
+        if not os.path.isfile(self.CONFIG_NAME):
             self.__create_config()
 
     def __create_config(self):

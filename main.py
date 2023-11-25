@@ -27,8 +27,8 @@ QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
 app = QApplication(sys.argv)
 
 
-def onLogged():
-    config.set_token("my_new_token")
+def onLogged(token):
+    config.set_token(token)
     MainWindow().show()
 
 config = ConfigManager()
@@ -36,7 +36,7 @@ config = ConfigManager()
 if config.is_logged():
     w = MainWindow()
 else:
-    w = LoginWindow(onLogged)  # PasscodeWidget() # # MainWindow()
+    w = LoginWindow(onLogged)
 
 w.show()
 

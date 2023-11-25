@@ -54,9 +54,6 @@ class Widget(QWidget):
 
         hwnd = c_int(self.winId())
         ok = SetWindowCompositionAttribute(hwnd, ctypes.pointer(win_comp_attr_data))
-        print(ok)
-
-        print(ctypes.get_last_error())
 
         self.old_pos = None
         self.frame_color = Qt.darkCyan

@@ -1,1 +1,0 @@
-{"logged": true, "token": "my_new_token"}

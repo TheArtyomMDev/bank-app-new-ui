@@ -76,8 +76,3 @@ class PasscodeWidget(QWidget):
 
         if len(self.passcode) == 4:
             self.onPasscodeEntered(self.passcode)
-
-    # def close(self):
-    #     self.passcode = ""
-    #     self.pass_fields: list[LineEdit] = []
-    #     return super().close()

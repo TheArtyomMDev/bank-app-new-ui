@@ -13,11 +13,10 @@ class LoginWindow(QWidget):
 
     def __init__(self, onLogged):
         super().__init__()
-        self.resize(400, 400)
+        self.setFixedSize(400, 400)
 
-        def onMyLogged():
-            print("Here Logged")
-            onLogged()
+        def onMyLogged(token):
+            onLogged(token)
             self.destroy()
 
         self.pivot = SegmentedWidget(self)

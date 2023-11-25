@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSizePolicy
 from email_validator import validate_email, EmailNotValidError
 from qfluentwidgets import PasswordLineEdit, LineEdit, PrimaryPushButton, BodyLabel
 
@@ -26,7 +27,9 @@ class LoginWidget(QWidget):
         lay.addWidget(password)
 
         self.error = BodyLabel("", parent=None)
-        self.error.setMaximumHeight(20)
+        self.error.setMaximumHeight(40)
+        self.error.setWordWrap(True)
+        self.error.setStyleSheet("color: red; font-size: 12px; font-weight: bold; text-align: center;")
         lay.addWidget(self.error)
 
         lay.addSpacing(50)
@@ -53,7 +56,7 @@ class LoginWidget(QWidget):
                 raise PasswordNotValidError("Password must be at least 6 characters long")
 
             self.set_error("")
-            ServerApi().login(email, password, self.onLogged)
+            ServerApi().login(email, password, self.onLogged, self.set_error)
         except EmailNotValidError as e:
             self.set_error(str(e))
         except PasswordNotValidError as e:

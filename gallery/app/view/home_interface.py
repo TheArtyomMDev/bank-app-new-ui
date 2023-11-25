@@ -1,16 +1,19 @@
 # coding:utf-8
 from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QPixmap, QPainter, QColor, QBrush, QPainterPath, QLinearGradient
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidgetItem, QListWidget
 
-from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon
+from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon, BodyLabel, TitleLabel, ListWidget
+
+from api.ServerApi import ServerApi
 from ..common.config import cfg, HELP_URL, REPO_URL, EXAMPLE_URL, FEEDBACK_URL
 from ..common.icon import Icon, FluentIconBase
 from ..components.link_card import LinkCardView
-from ..components.sample_card import SampleCardView
+from ..components.sample_card import SampleCardView, SampleCard
 from ..common.style_sheet import StyleSheet
+from ..components.transaction_card import TransactionCard
 
-
+api = ServerApi()
 class BannerWidget(QWidget):
     """ Banner widget """
 
@@ -20,7 +23,9 @@ class BannerWidget(QWidget):
 
         self.view = QWidget(self)
         self.vBoxLayout = QVBoxLayout(self)
-        self.galleryLabel = QLabel('Welcome back, @hsjkda!', self)
+
+        tag = api.get_tag()
+        self.galleryLabel = QLabel(f'Welcome back, {tag}!', self)
         self.banner = QPixmap(':/gallery/images/header1.png')
         # self.linkCardView = LinkCardView(self)
 
@@ -138,13 +143,49 @@ class HomeInterface(ScrollArea):
         self.setWidgetResizable(True)
 
         self.vBoxLayout.setContentsMargins(0, 0, 0, 36)
-        self.vBoxLayout.setSpacing(40)
+        self.vBoxLayout.setSpacing(20)
         self.vBoxLayout.addWidget(self.banner)
         self.vBoxLayout.setAlignment(Qt.AlignTop)
 
     def loadSamples(self):
-        """ load samples """
-        # basic input samples
+        main_layout = QVBoxLayout()
+        main_layout.setContentsMargins(40, 0, 0, 0)
+
+        title = TitleLabel(self.tr('Recent transactions'))
+        title.setObjectName("titleLabel")
+        title.setMaximumHeight(50)
+        main_layout.addWidget(title)
+
+        self.transactionList = ListWidget()
+        self.transactionList.setSpacing(5)
+        for i in range(10):
+            item = QListWidgetItem()
+            self.transactionList.addItem(item)
+
+            card = TransactionCard("+ 50 $", "@john_the_mad")
+            self.transactionList.setItemWidget(item, card)
+
+        # self.transactionList.setContentsMargins(40, 40, 40, 40)
+        self.transactionList.setFixedWidth(500)
+
+        main_layout.addWidget(self.transactionList)
+
+        temp_widget = QWidget()
+        temp_widget.setLayout(main_layout)
+
+        self.vBoxLayout.addWidget(temp_widget)
+        # basicInputView = SampleCardView(self.tr("Your Transfers"), self.view)
+        # basicInputView.addSampleCard(
+        #     icon=":/gallery/images/controls/Button.png",
+        #     title="Button",
+        #     content=self.tr(
+        #         "A control that responds to user input and emit clicked signal."),
+        #     routeKey="basicInputInterface",
+        #     index=0
+        # )
+
+
+        '''
         basicInputView = SampleCardView(
             self.tr("Basic input samples"), self.view)
         basicInputView.addSampleCard(
@@ -514,3 +555,4 @@ class HomeInterface(ScrollArea):
             index=4
         )
         self.vBoxLayout.addWidget(collectionView)
+        '''
