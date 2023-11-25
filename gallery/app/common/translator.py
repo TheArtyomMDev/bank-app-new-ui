@@ -18,3 +18,5 @@ class Translator(QObject):
         self.navigation = self.tr('Navigation')
         self.basicInput = self.tr('Basic input')
         self.statusInfo = self.tr('Status & info')
+
+        self.transfer = self.tr("Transfer Money")

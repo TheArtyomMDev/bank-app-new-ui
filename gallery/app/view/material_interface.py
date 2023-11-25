@@ -1,5 +1,6 @@
 # coding:utf-8
 from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import QVBoxLayout, QLabel
 from qfluentwidgets.components.widgets.acrylic_label import AcrylicLabel
 from qfluentwidgets import FluentIcon as FIF
 
@@ -26,6 +27,10 @@ class MaterialInterface(GalleryInterface):
         self.label.setMaximumSize(787, 579)
         self.label.setMinimumSize(197, 145)
         cfg.blurRadius.valueChanged.connect(self.onBlurRadiusChanged)
+
+        # lay = QVBoxLayout()
+        # lay.addWidget(QLabel("asdfv"))
+        # self.label.setLayout(lay)
 
         self.addExampleCard(
             self.tr('Acrylic label'),

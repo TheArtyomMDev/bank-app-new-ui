@@ -11,6 +11,7 @@ class StyleSheet(StyleSheetBase, Enum):
     SAMPLE_CARD = "sample_card"
     HOME_INTERFACE = "home_interface"
     ICON_INTERFACE = "icon_interface"
+    # TRANSFER_INTERFACE = "home_interface"
     VIEW_INTERFACE = "view_interface"
     SETTING_INTERFACE = "setting_interface"
     GALLERY_INTERFACE = "gallery_interface"
@@ -18,4 +19,5 @@ class StyleSheet(StyleSheetBase, Enum):
 
     def path(self, theme=Theme.AUTO):
         theme = qconfig.theme if theme == Theme.AUTO else theme
+        print(self.value)
         return f":/gallery/qss/{theme.value.lower()}/{self.value}.qss"

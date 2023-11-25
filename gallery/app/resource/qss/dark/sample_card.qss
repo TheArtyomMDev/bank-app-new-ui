@@ -1,7 +1,6 @@
 #titleLabel {
+    font: 18px 'Segoe UI', 'Microsoft YaHei', 'PingFang SC';
     color: white;
-    font: 14px 'Segoe UI', 'Microsoft YaHei', 'PingFang SC';
-    font-weight: bold;
 }
 
 #contentLabel {
@@ -13,3 +12,10 @@
     color: white;
     font: 20px "Segoe UI SemiBold", "Microsoft YaHei", 'PingFang SC';
 }
+
+SampleCard {
+    border: 1px solid rgb(46, 46, 46);
+    border-radius: 10px;
+    background-color: rgba(39, 39, 39, 0.60);
+}
+

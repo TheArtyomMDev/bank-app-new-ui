@@ -1,8 +1,9 @@
 # coding:utf-8
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QFrame, QLabel, QVBoxLayout, QHBoxLayout
-
+from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout
 from qfluentwidgets import IconWidget, TextWrap, FlowLayout, CardWidget
+
+from qtacrylic import WindowEffect
 from ..common.signal_bus import signalBus
 from ..common.style_sheet import StyleSheet
 
@@ -12,32 +13,65 @@ class SampleCard(CardWidget):
 
     def __init__(self, icon, title, content, routeKey, index, parent=None):
         super().__init__(parent=parent)
+
         self.index = index
         self.routekey = routeKey
 
+        self.setFixedSize(198, 220)
+        self.iconWidget = IconWidget(icon, self)
+        self.titleLabel = QLabel(title, self)
+        self.contentLabel = QLabel(TextWrap.wrap(content, 28, False)[0], self)
+
+        self.iconWidget.setFixedSize(54, 54)
+
+        self.vBoxLayout = QVBoxLayout(self)
+        self.vBoxLayout.setSpacing(0)
+        self.vBoxLayout.setContentsMargins(24, 24, 0, 13)
+        self.vBoxLayout.addWidget(self.iconWidget)
+        self.vBoxLayout.addSpacing(16)
+        self.vBoxLayout.addWidget(self.titleLabel)
+        self.vBoxLayout.addSpacing(8)
+        self.vBoxLayout.addWidget(self.contentLabel)
+        self.vBoxLayout.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+
+        self.titleLabel.setObjectName('titleLabel')
+        self.contentLabel.setObjectName('contentLabel')
+
+        # self.blur = QGraphicsBlurEffect()
+        # self.blur.setBlurRadius(100)
+        # self.setGraphicsEffect(QGraphicsBlurEffect())
+
+        # self.setWindowFlags(Qt.FramelessWindowHint)  # make the window frameless
+        # self.setAttribute(Qt.WA_TranslucentBackground)
+        self.windowFX = WindowEffect()  # instatiate the WindowEffect class
+        self.windowFX.setAeroEffect(self.winId())  # set the Acrylic effect by specifying the window id
+
+        return
         self.iconWidget = IconWidget(icon, self)
         self.titleLabel = QLabel(title, self)
         self.contentLabel = QLabel(TextWrap.wrap(content, 45, False)[0], self)
 
-        self.hBoxLayout = QHBoxLayout(self)
-        self.vBoxLayout = QVBoxLayout()
+        # self.hBoxLayout = QHBoxLayout(self)
+        self.vBoxLayout = QVBoxLayout(self)
 
-        self.setFixedSize(360, 90)
-        self.iconWidget.setFixedSize(48, 48)
+        # self.setFixedSize(150, 360)
+        self.setFixedHeight(150)
+        self.iconWidget.setFixedSize(54, 54)
 
-        self.hBoxLayout.setSpacing(28)
-        self.hBoxLayout.setContentsMargins(20, 0, 0, 0)
-        self.vBoxLayout.setSpacing(2)
-        self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
+        # self.hBoxLayout.setSpacing(28)
+        # self.hBoxLayout.setContentsMargins(20, 0, 0, 0)
+        # self.vBoxLayout.setSpacing(0)
+        # self.vBoxLayout.setContentsMargins(10, 10, 10, 10)
         self.vBoxLayout.setAlignment(Qt.AlignVCenter)
 
-        self.hBoxLayout.setAlignment(Qt.AlignVCenter)
-        self.hBoxLayout.addWidget(self.iconWidget)
-        self.hBoxLayout.addLayout(self.vBoxLayout)
-        self.vBoxLayout.addStretch(1)
+        # self.hBoxLayout.setAlignment(Qt.AlignVCenter)
+        self.vBoxLayout.addWidget(self.iconWidget)
+        # self.hBoxLayout.addLayout(self.vBoxLayout)
+        # self.vBoxLayout.addStretch(1)
         self.vBoxLayout.addWidget(self.titleLabel)
+        self.vBoxLayout.addSpacing(1)
         self.vBoxLayout.addWidget(self.contentLabel)
-        self.vBoxLayout.addStretch(1)
+        # self.vBoxLayout.addStretch(1)
 
         self.titleLabel.setObjectName('titleLabel')
         self.contentLabel.setObjectName('contentLabel')
@@ -72,3 +106,5 @@ class SampleCardView(QWidget):
         """ add sample card """
         card = SampleCard(icon, title, content, routeKey, index, self)
         self.flowLayout.addWidget(card)
+
+        # self.flowLayout.addWidget(SuperBlurred())

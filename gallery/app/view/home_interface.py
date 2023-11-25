@@ -18,48 +18,68 @@ class BannerWidget(QWidget):
         super().__init__(parent=parent)
         self.setFixedHeight(336)
 
+        self.view = QWidget(self)
         self.vBoxLayout = QVBoxLayout(self)
-        self.galleryLabel = QLabel('Fluent Gallery', self)
+        self.galleryLabel = QLabel('Welcome back, @hsjkda!', self)
         self.banner = QPixmap(':/gallery/images/header1.png')
-        self.linkCardView = LinkCardView(self)
+        # self.linkCardView = LinkCardView(self)
+
+        basicInputView = SampleCardView(
+            self.tr("Quick Actions"), self.view)
+        basicInputView.addSampleCard(
+            icon=":/gallery/images/controls/Button.png",
+            title="Money",
+            content=self.tr("Transfer money"),
+            routeKey="basicInputInterface",
+            index=0
+        )
+        basicInputView.addSampleCard(
+            icon=":/gallery/images/controls/Button.png",
+            title="Exchange rates",
+            content=self.tr("Wanna buy those green sheets?"),
+            routeKey="basicInputInterface",
+            index=0
+        )
 
         self.galleryLabel.setObjectName('galleryLabel')
 
         self.vBoxLayout.setSpacing(0)
         self.vBoxLayout.setContentsMargins(0, 20, 0, 0)
         self.vBoxLayout.addWidget(self.galleryLabel)
-        self.vBoxLayout.addWidget(self.linkCardView, 1, Qt.AlignBottom)
+        self.vBoxLayout.addWidget(basicInputView, 1, Qt.AlignBottom)
         self.vBoxLayout.setAlignment(Qt.AlignLeft | Qt.AlignTop)
 
-        self.linkCardView.addCard(
-            ':/gallery/images/logo.png',
-            self.tr('Getting started'),
-            self.tr('An overview of app development options and samples.'),
-            HELP_URL
-        )
-
-        self.linkCardView.addCard(
-            FluentIcon.GITHUB,
-            self.tr('GitHub repo'),
-            self.tr(
-                'The latest fluent design controls and styles for your applications.'),
-            REPO_URL
-        )
-
-        self.linkCardView.addCard(
-            FluentIcon.CODE,
-            self.tr('Code samples'),
-            self.tr(
-                'Find samples that demonstrate specific tasks, features and APIs.'),
-            EXAMPLE_URL
-        )
-
-        self.linkCardView.addCard(
-            FluentIcon.FEEDBACK,
-            self.tr('Send feedback'),
-            self.tr('Help us improve PyQt-Fluent-Widgets by providing feedback.'),
-            FEEDBACK_URL
-        )
+        # self.linkCardView = LinkCardView()
+        # self.linkCardView.addCard(
+        #     ':/gallery/images/logo.png',
+        #     self.tr('Getting started'),
+        #     self.tr('An overview of app development options and samples.'),
+        #     HELP_URL
+        # )
+        # self.vBoxLayout.addWidget(self.linkCardView, 1, Qt.AlignBottom)
+        #
+        # self.linkCardView.addCard(
+        #     FluentIcon.GITHUB,
+        #     self.tr('GitHub repo'),
+        #     self.tr(
+        #         'The latest fluent design controls and styles for your applications.'),
+        #     REPO_URL
+        # )
+        #
+        # self.linkCardView.addCard(
+        #     FluentIcon.CODE,
+        #     self.tr('Code samples'),
+        #     self.tr(
+        #         'Find samples that demonstrate specific tasks, features and APIs.'),
+        #     EXAMPLE_URL
+        # )
+        #
+        # self.linkCardView.addCard(
+        #     FluentIcon.FEEDBACK,
+        #     self.tr('Send feedback'),
+        #     self.tr('Help us improve PyQt-Fluent-Widgets by providing feedback.'),
+        #     FEEDBACK_URL
+        # )
 
     def paintEvent(self, e):
         super().paintEvent(e)
