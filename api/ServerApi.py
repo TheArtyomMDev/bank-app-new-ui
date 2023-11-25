@@ -6,6 +6,5 @@ from helpers.PasscodeRequest import passcode_setup
 class ServerApi:
 
     @passcode_setup
-    def login(self, email, password, passcode) -> str:
-        print(passcode)
-        return "1233"
+    def login(self, email, password, passcode):
+        print("Server Here: " + passcode)

@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QLabel
 from qfluentwidgets import PasswordLineEdit, LineEdit, PrimaryPushButton, BodyLabel
 
 from api.ServerApi import ServerApi
+from passcode.passcodewindow import PasscodeWidget
 
 
 class LoginWidget(QWidget):
@@ -37,8 +38,6 @@ class LoginWidget(QWidget):
         self.error.setText("Error")
 
     def login(self, email, password):
-        async def main():
-            result = ServerApi().login(email, password)
-            print("Got result:", result)
 
-        asyncio.run(main())
+        ServerApi().login(email, password)
+

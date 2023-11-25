@@ -8,11 +8,13 @@ from gallery.app.common.style_sheet import StyleSheet
 
 
 class PasscodeWidget(QWidget):
-    passcode = ""
-    pass_fields: list[LineEdit] = []
+
 
     def __init__(self, onPasscodeEntered):
         super().__init__()
+
+        self.passcode = ""
+        self.pass_fields: list[LineEdit] = []
 
         self.onPasscodeEntered = onPasscodeEntered
 
@@ -70,7 +72,12 @@ class PasscodeWidget(QWidget):
             else:
                 self.pass_fields[i].setText("")
 
-        print(self.passcode)
+        print(self.passcode + " " + str(len(self.passcode)) + ' ' + str(len(self.pass_fields)))
 
         if len(self.passcode) == 4:
             self.onPasscodeEntered(self.passcode)
+
+    # def close(self):
+    #     self.passcode = ""
+    #     self.pass_fields: list[LineEdit] = []
+    #     return super().close()

@@ -8,30 +8,13 @@ from passcode.passcodewindow import PasscodeWidget
 
 
 def passcode_setup(f):
-    # future = asyncio.Future()
-    #
-
     def decorator(*args, **kwargs):
         def onPasscodeEntered(passcode):
-            print(passcode)
-            return passcode
+            w.destroy()
+            print("Here: " + passcode)
+            f(passcode=passcode, *args, **kwargs)
 
-        # result = await future
-
-        passcode = ""
-
-        async def main():
-            w = PasscodeWidget(onPasscodeEntered)
-            w.show()
-
-            while True:
-                passcode = w.passcode
-
-        asyncio.run(main())
-
-        while len(passcode) != 4:
-            pass
-
-        return f(*args, **kwargs)
+        w = PasscodeWidget(onPasscodeEntered)
+        w.show()
 
     return decorator
