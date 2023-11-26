@@ -16,7 +16,7 @@ class ServerApi:
         self.refresh_token = None
 
         if config.is_logged():
-            self.__set_token(config.get_token())
+            self.set_token(config.get_token())
 
     @passcode_setup
     def signup(self, email, password, tag, onLogged, onFailed, passcode):
@@ -83,7 +83,7 @@ class ServerApi:
         else:
             onFailed(res["reason"])
 
-    def __set_token(self, token):
+    def set_token(self, token):
         self.refresh_token = token
 
         res = self.exec_request("/access_token", "POST", {

@@ -31,6 +31,8 @@ app = QApplication(sys.argv)
 
 def onLogged(token):
     config.set_token(token)
+    api.set_token(token)
+    config.set_tag(api.get_tag())
     MainWindow().show()
 
 

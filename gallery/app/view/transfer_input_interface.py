@@ -31,8 +31,6 @@ config = ConfigManager()
 
 
 class TransferMoneyInputInterface(GalleryInterface):
-    """ Basic input interface """
-
     receiver = ""
 
     def set_receiver(self, receiver):
@@ -103,7 +101,6 @@ class TransferMoneyInputInterface(GalleryInterface):
             '',
             main_widget
         )
-
 
         self.pb = PrimaryPushButton(self.tr('Proceed'))
         self.pb.setEnabled(False)
