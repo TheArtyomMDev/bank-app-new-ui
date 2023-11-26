@@ -98,6 +98,7 @@ class HomeInterface(ScrollArea):
 
     def __init__(self, parent=None):
         super().__init__(parent=parent)
+        self.th = QThread()
         self.banner = BannerWidget(self)
         self.view = QWidget(self)
         self.vBoxLayout = QVBoxLayout(self.view)
@@ -131,30 +132,30 @@ class HomeInterface(ScrollArea):
         self.transactionList = ListWidget()
         self.transactionList.setSpacing(5)
 
-        all_trans = api.get_transactions()
-
-        transactions = []
-        for elem in all_trans["sender"]:
-            elem["type"] = "sender"
-            transactions.append(elem)
-
-        for elem in all_trans["receiver"]:
-            elem["type"] = "receiver"
-            transactions.append(elem)
-
-        for elem in transactions:
-            item = QListWidgetItem()
-            self.transactionList.addItem(item)
-
-            if elem["type"] == "sender":
-                prefix = "-"
-            else:
-                prefix = "+"
-
-            date = datetime.datetime.fromtimestamp(elem["time"]).strftime("%Y-%m-%d %H:%M:%S")
-            card = TransactionCard(f"{prefix} {elem['amount']}", date, elem["message"])
-
-            self.transactionList.setItemWidget(item, card)
+        # all_trans = api.get_transactions()
+        #
+        # transactions = []
+        # for elem in all_trans["sender"]:
+        #     elem["type"] = "sender"
+        #     transactions.append(elem)
+        #
+        # for elem in all_trans["receiver"]:
+        #     elem["type"] = "receiver"
+        #     transactions.append(elem)
+        #
+        # for elem in transactions:
+        #     item = QListWidgetItem()
+        #     self.transactionList.addItem(item)
+        #
+        #     if elem["type"] == "sender":
+        #         prefix = "-"
+        #     else:
+        #         prefix = "+"
+        #
+        #     date = datetime.datetime.fromtimestamp(elem["time"]).strftime("%Y-%m-%d %H:%M:%S")
+        #     card = TransactionCard(f"{prefix} {elem['amount']}", date, elem["message"])
+        #
+        #     self.transactionList.setItemWidget(item, card)
 
         # self.transactionList.setContentsMargins(40, 40, 40, 40)
         self.transactionList.setFixedWidth(500)
@@ -166,32 +167,34 @@ class HomeInterface(ScrollArea):
 
         self.vBoxLayout.addWidget(temp_widget)
 
+        self.updateTransactions()
+
+    # def updateTransactionsView(self):
+    #     self.transactionList.clear()
+    #     transactions = []
+    #     for elem in self.all_trans["sender"]:
+    #         elem["type"] = "sender"
+    #         transactions.append(elem)
+    #
+    #     for elem in self.all_trans["receiver"]:
+    #         elem["type"] = "receiver"
+    #         transactions.append(elem)
+    #
+    #     for elem in transactions:
+    #         item = QListWidgetItem()
+    #         self.transactionList.addItem(item)
+    #
+    #         if elem["type"] == "sender":
+    #             prefix = "-"
+    #         else:
+    #             prefix = "+"
+    #
+    #         date = datetime.datetime.fromtimestamp(elem["time"]).strftime("%Y-%m-%d %H:%M:%S")
+    #         card = TransactionCard(f"{prefix} {elem['amount']}", date, elem["message"])
+    #
+    #         self.transactionList.setItemWidget(item, card)
+
     def updateTransactionsView(self):
-        self.transactionList.clear()
-        transactions = []
-        for elem in self.all_trans["sender"]:
-            elem["type"] = "sender"
-            transactions.append(elem)
-
-        for elem in self.all_trans["receiver"]:
-            elem["type"] = "receiver"
-            transactions.append(elem)
-
-        for elem in transactions:
-            item = QListWidgetItem()
-            self.transactionList.addItem(item)
-
-            if elem["type"] == "sender":
-                prefix = "-"
-            else:
-                prefix = "+"
-
-            date = datetime.datetime.fromtimestamp(elem["time"]).strftime("%Y-%m-%d %H:%M:%S")
-            card = TransactionCard(f"{prefix} {elem['amount']}", date, elem["message"])
-
-            self.transactionList.setItemWidget(item, card)
-
-    def simple_callback(self):
         if self.transactionList is None:
             return
 
@@ -222,22 +225,32 @@ class HomeInterface(ScrollArea):
 
             self.transactionList.setItemWidget(item, card)
 
-    def showEvent(self, a0: QtGui.QShowEvent):
+    def updateTransactions(self):
+        print("Update transactions: ")
+
         class UpdateTransactions(QObject):
             finished = pyqtSignal()
+
             def startWork(self2):
                 self.all_trans = api.get_transactions()
                 self2.finished.emit()
 
-        self.worker = UpdateTransactions()
-        self.thread = QThread()
-        self.worker.moveToThread(self.thread)
+        # if self.th is not None:
+        #     self.th.quit()
+        #     self.th.wait()
 
-        self.thread.started.connect(self.worker.startWork)
-        self.worker.finished.connect(self.thread.quit)
+        self.worker = UpdateTransactions()
+
+
+        self.worker.moveToThread(self.th)
+
+        self.th.started.connect(self.worker.startWork)
+        self.worker.finished.connect(self.th.quit)
         self.worker.finished.connect(self.worker.deleteLater)
-        self.thread.finished.connect(self.thread.deleteLater)
+        # self.th.finished.connect(self.th.deleteLater)
         self.worker.finished.connect(self.updateTransactionsView)
 
-        self.thread.start()
+        self.th.start()
 
+    def showEvent(self, a0: QtGui.QShowEvent):
+        self.updateTransactions()
