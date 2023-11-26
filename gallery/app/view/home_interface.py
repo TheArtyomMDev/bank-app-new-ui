@@ -186,6 +186,7 @@ class HomeInterface(ScrollArea):
 
     def updateTransactions(self):
         self.updateIndicator.setVisible(True)
+
         class UpdateTransactions(QObject):
             finished = pyqtSignal()
 
