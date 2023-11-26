@@ -4,8 +4,8 @@ import datetime
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtCore import Qt, QRectF, QCoreApplication, QThreadPool, QThread, QObject, QRunnable, pyqtSignal
 from PyQt5.QtGui import QPixmap, QPainter, QColor, QBrush, QPainterPath, QLinearGradient
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidgetItem
-from qfluentwidgets import ScrollArea, isDarkTheme, TitleLabel, ListWidget
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidgetItem, QHBoxLayout
+from qfluentwidgets import ScrollArea, isDarkTheme, TitleLabel, ListWidget, IndeterminateProgressRing
 
 from helpers import InstanceHolders
 from helpers.ConfigManager import ConfigManager
@@ -121,87 +121,42 @@ class HomeInterface(ScrollArea):
         self.vBoxLayout.setAlignment(Qt.AlignTop)
 
     def loadSamples(self):
-        main_layout = QVBoxLayout()
-        main_layout.setContentsMargins(40, 0, 0, 0)
+        main_v_layout = QVBoxLayout()
+        main_v_layout.setContentsMargins(40, 0, 0, 0)
 
         title = TitleLabel(self.tr('Recent transactions'))
         title.setObjectName("titleLabel")
         title.setMaximumHeight(50)
-        main_layout.addWidget(title)
+
+        title_layout = QHBoxLayout()
+        title_layout.addWidget(title)
+        self.updateIndicator = IndeterminateProgressRing(self)
+        self.updateIndicator.setFixedSize(50, 50)
+        self.updateIndicator.setVisible(False)
+        title_layout.addWidget(self.updateIndicator)
+
+        tmp_widget = QWidget()
+        tmp_widget.setLayout(title_layout)
+        tmp_widget.setMaximumWidth(500)
+
+        main_v_layout.addWidget(tmp_widget)
 
         self.transactionList = ListWidget()
         self.transactionList.setSpacing(5)
 
-        # all_trans = api.get_transactions()
-        #
-        # transactions = []
-        # for elem in all_trans["sender"]:
-        #     elem["type"] = "sender"
-        #     transactions.append(elem)
-        #
-        # for elem in all_trans["receiver"]:
-        #     elem["type"] = "receiver"
-        #     transactions.append(elem)
-        #
-        # for elem in transactions:
-        #     item = QListWidgetItem()
-        #     self.transactionList.addItem(item)
-        #
-        #     if elem["type"] == "sender":
-        #         prefix = "-"
-        #     else:
-        #         prefix = "+"
-        #
-        #     date = datetime.datetime.fromtimestamp(elem["time"]).strftime("%Y-%m-%d %H:%M:%S")
-        #     card = TransactionCard(f"{prefix} {elem['amount']}", date, elem["message"])
-        #
-        #     self.transactionList.setItemWidget(item, card)
-
-        # self.transactionList.setContentsMargins(40, 40, 40, 40)
         self.transactionList.setFixedWidth(500)
 
-        main_layout.addWidget(self.transactionList)
+        main_v_layout.addWidget(self.transactionList)
 
         temp_widget = QWidget()
-        temp_widget.setLayout(main_layout)
+        temp_widget.setLayout(main_v_layout)
 
         self.vBoxLayout.addWidget(temp_widget)
 
         self.updateTransactions()
 
-    # def updateTransactionsView(self):
-    #     self.transactionList.clear()
-    #     transactions = []
-    #     for elem in self.all_trans["sender"]:
-    #         elem["type"] = "sender"
-    #         transactions.append(elem)
-    #
-    #     for elem in self.all_trans["receiver"]:
-    #         elem["type"] = "receiver"
-    #         transactions.append(elem)
-    #
-    #     for elem in transactions:
-    #         item = QListWidgetItem()
-    #         self.transactionList.addItem(item)
-    #
-    #         if elem["type"] == "sender":
-    #             prefix = "-"
-    #         else:
-    #             prefix = "+"
-    #
-    #         date = datetime.datetime.fromtimestamp(elem["time"]).strftime("%Y-%m-%d %H:%M:%S")
-    #         card = TransactionCard(f"{prefix} {elem['amount']}", date, elem["message"])
-    #
-    #         self.transactionList.setItemWidget(item, card)
-
     def updateTransactionsView(self):
-        if self.transactionList is None:
-            return
-
-        print("Callback")
         self.transactionList.clear()
-        print(self.all_trans)
-
         transactions = []
         for elem in self.all_trans["sender"]:
             elem["type"] = "sender"
@@ -225,9 +180,10 @@ class HomeInterface(ScrollArea):
 
             self.transactionList.setItemWidget(item, card)
 
-    def updateTransactions(self):
-        print("Update transactions: ")
+        self.updateIndicator.setVisible(False)
 
+    def updateTransactions(self):
+        self.updateIndicator.setVisible(True)
         class UpdateTransactions(QObject):
             finished = pyqtSignal()
 
@@ -235,12 +191,7 @@ class HomeInterface(ScrollArea):
                 self.all_trans = api.get_transactions()
                 self2.finished.emit()
 
-        # if self.th is not None:
-        #     self.th.quit()
-        #     self.th.wait()
-
         self.worker = UpdateTransactions()
-
 
         self.worker.moveToThread(self.th)
 
