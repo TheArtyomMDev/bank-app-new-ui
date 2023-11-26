@@ -19,15 +19,14 @@ class ServerApi:
             self.__set_token(config.get_token())
 
     @passcode_required
-    def transfer(self, receiver, amount, message, passcode):
+    def transfer(self, receiver, amount, message, onFinished, passcode):
         res = self.exec_request("/transfer_money", "POST", {
             "receiver": receiver,
             "amount": amount,
             "message": message
         }, passcode=passcode)
 
-        print(res)
-        return res
+        onFinished(res)
 
     def get_balance(self):
         res = self.exec_request("/get_balance", "GET")

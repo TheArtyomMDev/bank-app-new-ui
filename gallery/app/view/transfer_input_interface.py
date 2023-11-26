@@ -15,7 +15,7 @@ from qfluentwidgets import (Action, DropDownPushButton, DropDownToolButton, Push
                             TransparentToggleToolButton,
                             TransparentTogglePushButton, TransparentDropDownToolButton, TransparentToolButton,
                             PillPushButton, PillToolButton, LineEdit, SearchLineEdit, FlowLayout, DoubleSpinBox,
-                            TitleLabel)
+                            TitleLabel, InfoBar, InfoBarPosition)
 
 from helpers import InstanceHolders
 from helpers.ConfigManager import ConfigManager
@@ -107,4 +107,28 @@ class TransferMoneyInputInterface(GalleryInterface):
         )
 
     def do_proceed(self):
-        api.transfer(self.users_tags[self.receiver]['uid'], self.money_input.value(), "default message")
+        api.transfer(self.users_tags[self.receiver]['uid'], self.money_input.value(), "default message", self.on_transfer_finished)
+
+    def on_transfer_finished(self, res):
+        print(res)
+
+        if res["status"] == "OK":
+            InfoBar.success(
+                title='Transfer success',
+                content='Money left: ' + str(res["data"]["balance"]),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.BOTTOM_RIGHT,
+                duration=5000,
+                parent=self
+            )
+        else:
+            InfoBar.error(
+                title='Transfer failed',
+                content=str(res["reason"]),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.BOTTOM_RIGHT,
+                duration=-1,
+                parent=self
+            )

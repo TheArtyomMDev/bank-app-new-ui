@@ -91,7 +91,7 @@ class MainWindow(FluentWindow):
         # self.addSubInterface(self.menuInterface, Icon.MENU, t.menus, pos)
         # self.addSubInterface(self.navigationViewInterface, FIF.MENU, t.navigation, pos)
         # self.addSubInterface(self.scrollInterface, FIF.SCROLL, t.scroll, pos)
-        # self.addSubInterface(self.statusInfoInterface, FIF.CHAT, t.statusInfo, pos)
+        self.addSubInterface(self.statusInfoInterface, FIF.CHAT, t.statusInfo, pos)
         # self.addSubInterface(self.textInterface, Icon.TEXT, t.text, pos)
         # self.addSubInterface(self.viewInterface, Icon.GRID, t.view, pos)
 

@@ -3,7 +3,7 @@
         "AcrylicBlurRadius": 6
     },
     "Update": {
-        "CheckUpdateAtStartUp": true
+        "CheckUpdateAtStartUp": false
     },
     "Folders": {
         "Download": "C:/Users/artyom/PycharmProjects/qt-fluent-sample/app/download",
