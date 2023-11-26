@@ -7,6 +7,8 @@ from qfluentwidgets import (NavigationAvatarWidget, NavigationItemPosition, Mess
                             SplashScreen)
 from qfluentwidgets import FluentIcon as FIF
 
+from helpers.ConfigManager import ConfigManager
+from .exchange_input_interface import ExchangeInputInterface
 from .gallery_interface import GalleryInterface
 from .home_interface import HomeInterface
 from .basic_input_interface import BasicInputInterface
@@ -28,6 +30,8 @@ from ..common.icon import Icon
 from ..common.signal_bus import signalBus
 from ..common.translator import Translator
 
+
+config = ConfigManager()
 
 class MainWindow(FluentWindow):
 
@@ -52,6 +56,7 @@ class MainWindow(FluentWindow):
         self.viewInterface = ViewInterface(self)
 
         self.trasferMoneyInterface = TransferMoneyInputInterface(self)
+        self.exchangeMoneyInterface = ExchangeInputInterface(self)
 
         # enable acrylic effect
         self.navigationInterface.setAcrylicEnabled(True)
@@ -71,15 +76,16 @@ class MainWindow(FluentWindow):
         # add navigation items
         t = Translator()
         self.addSubInterface(self.homeInterface, FIF.HOME, self.tr('Home'))
-        self.addSubInterface(self.iconInterface, Icon.EMOJI_TAB_SYMBOLS, t.icons)
+        # self.addSubInterface(self.iconInterface, Icon.EMOJI_TAB_SYMBOLS, t.icons)
         self.navigationInterface.addSeparator()
 
         pos = NavigationItemPosition.SCROLL
         self.addSubInterface(self.trasferMoneyInterface, FIF.SEND, t.transfer, pos)
+        self.addSubInterface(self.exchangeMoneyInterface, FIF.SYNC, t.exchange, pos)
 
         # self.addSubInterface(self.basicInputInterface, FIF.CHECKBOX, t.basicInput, pos)
         # self.addSubInterface(self.dateTimeInterface, FIF.DATE_TIME, t.dateTime, pos)
-        self.addSubInterface(self.dialogInterface, FIF.MESSAGE, t.dialogs, pos)
+        # self.addSubInterface(self.dialogInterface, FIF.MESSAGE, t.dialogs, pos)
         # self.addSubInterface(self.layoutInterface, FIF.LAYOUT, t.layout, pos)
         # self.addSubInterface(self.materialInterface, FIF.PALETTE, t.material, pos)
         # self.addSubInterface(self.menuInterface, Icon.MENU, t.menus, pos)
@@ -92,8 +98,7 @@ class MainWindow(FluentWindow):
         # add custom widget to bottom
         self.navigationInterface.addWidget(
             routeKey='avatar',
-            widget=NavigationAvatarWidget('zhiyiYo', ':/gallery/images/shoko.png'),
-            onClick=self.onSupport,
+            widget=NavigationAvatarWidget(config.get_tag(), ':/gallery/images/shoko.png'),
             position=NavigationItemPosition.BOTTOM
         )
         self.addSubInterface(

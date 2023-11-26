@@ -3,23 +3,18 @@ import datetime
 
 from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QPixmap, QPainter, QColor, QBrush, QPainterPath, QLinearGradient
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidgetItem, QListWidget
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidgetItem
+from qfluentwidgets import ScrollArea, isDarkTheme, TitleLabel, ListWidget
 
-from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon, BodyLabel, TitleLabel, ListWidget, Flyout, InfoBarIcon
-
-from api.ServerApi import ServerApi
-from ..common.config import cfg, HELP_URL, REPO_URL, EXAMPLE_URL, FEEDBACK_URL
-from ..common.icon import Icon, FluentIconBase
-from ..components.link_card import LinkCardView
-from ..components.sample_card import SampleCardView, SampleCard
+from helpers import InstanceHolders
+from helpers.ConfigManager import ConfigManager
 from ..common.style_sheet import StyleSheet
+from ..components.sample_card import SampleCardView
 from ..components.transaction_card import TransactionCard
 
+api = InstanceHolders.api
 
-
-api = ServerApi()
-
-
+config = ConfigManager()
 class BannerWidget(QWidget):
     """ Banner widget """
 
@@ -30,8 +25,7 @@ class BannerWidget(QWidget):
         self.view = QWidget(self)
         self.vBoxLayout = QVBoxLayout(self)
 
-        tag = api.get_tag()
-        self.galleryLabel = QLabel(f'Welcome back, {tag}!', self)
+        self.galleryLabel = QLabel(f'Welcome back, {config.get_tag()}!', self)
         self.banner = QPixmap(':/gallery/images/header1.png')
         # self.linkCardView = LinkCardView(self)
 
@@ -48,7 +42,7 @@ class BannerWidget(QWidget):
             icon=":/gallery/images/controls/Stats.png",
             title="Exchange rates",
             content=self.tr("Wanna buy those green sheets?"),
-            routeKey="basicInputInterface",
+            routeKey="exchangeInputInterface",
             index=0
         )
 

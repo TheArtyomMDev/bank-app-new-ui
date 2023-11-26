@@ -23,9 +23,18 @@ class ConfigManager:
     def get_token(self):
         return self.__get_config()["token"]
 
-    def set_token(self, token):
+    def get_tag(self):
+        return self.__get_config()["tag"]
+
+    def __add_field(self, name, param):
         config = self.__get_config()
-        config["token"] = token
-        config["logged"] = True
+        config[name] = param
         with open(self.CONFIG_NAME, "w") as f:
             f.write(json.dumps(config))
+
+    def set_token(self, token):
+        self.__add_field("token", token)
+        self.__add_field("logged", True)
+
+    def set_tag(self, tag):
+        self.__add_field("tag", tag)

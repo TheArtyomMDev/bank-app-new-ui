@@ -43,8 +43,8 @@ class SampleCard(CardWidget):
 
         # self.setWindowFlags(Qt.FramelessWindowHint)  # make the window frameless
         # self.setAttribute(Qt.WA_TranslucentBackground)
-        self.windowFX = WindowEffect()  # instatiate the WindowEffect class
-        self.windowFX.setAeroEffect(self.winId())  # set the Acrylic effect by specifying the window id
+        # self.windowFX = WindowEffect()  # instatiate the WindowEffect class
+        # self.windowFX.setAeroEffect(self.winId())  # set the Acrylic effect by specifying the window id
 
         return
         self.iconWidget = IconWidget(icon, self)

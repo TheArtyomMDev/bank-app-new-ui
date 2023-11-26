@@ -3,7 +3,7 @@ from asyncio import Future
 import requests
 
 from helpers.ConfigManager import ConfigManager
-from helpers.PasscodeRequest import passcode_setup
+from helpers.PasscodeRequest import passcode_setup, passcode_required
 
 config = ConfigManager()
 
@@ -18,15 +18,36 @@ class ServerApi:
         if config.is_logged():
             self.__set_token(config.get_token())
 
+    @passcode_required
+    def transfer(self, receiver, amount, message, passcode):
+        res = self.exec_request("/transfer_money", "POST", {
+            "receiver": receiver,
+            "amount": amount,
+            "message": message
+        }, passcode=passcode)
+
+        print(res)
+        return res
+
+    def get_balance(self):
+        res = self.exec_request("/get_balance", "GET")
+        print(res)
+        return res["data"]["balance"]
+
     def get_tag(self):
         res = self.exec_request("/tag", "GET")
-        print(res)
+        # print(res)
         return res["data"]
 
     def get_transactions(self):
         res = self.exec_request("/transactions", "GET")
-        print(res)
+        # print(res)
         return res["data"]
+
+    def get_users(self):
+        res = self.exec_request("/search_users", "POST", {})
+        print(res)
+        return res["data"]["users"]
 
     @passcode_setup
     def login(self, email, password, onLogged, onFailed, passcode):

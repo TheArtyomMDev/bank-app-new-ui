@@ -2,6 +2,8 @@
 
 import pyqt5ac
 
+from api.ServerApi import ServerApi
+from helpers import InstanceHolders
 from helpers.ConfigManager import ConfigManager
 from login.loginwindow import LoginWindow
 
@@ -31,9 +33,15 @@ def onLogged(token):
     config.set_token(token)
     MainWindow().show()
 
+
 config = ConfigManager()
+api = InstanceHolders.api
 
 if config.is_logged():
+    tag = api.get_tag()
+    print("TAG: " + tag)
+    config.set_tag(tag)
+
     w = MainWindow()
 else:
     w = LoginWindow(onLogged)
