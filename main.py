@@ -41,7 +41,6 @@ api = InstanceHolders.api
 
 if config.is_logged():
     tag = api.get_tag()
-    print("TAG: " + tag)
     config.set_tag(tag)
 
     w = MainWindow()

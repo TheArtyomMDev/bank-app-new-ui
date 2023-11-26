@@ -107,7 +107,12 @@ class ServerApi:
             "token": token
         })
 
-        self.access_token = res["data"]["access_token"]
+        print(res)
+
+        if res["status"] == "ERROR":
+            config.logout()
+        else:
+            self.access_token = res["data"]["access_token"]
 
     def exec_request(self, path, method, body=None, passcode=None):
         headers = {}

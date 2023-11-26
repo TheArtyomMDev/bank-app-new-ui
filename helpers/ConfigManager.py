@@ -38,3 +38,6 @@ class ConfigManager:
 
     def set_tag(self, tag):
         self.__add_field("tag", tag)
+
+    def logout(self):
+        self.__add_field("logged", False)

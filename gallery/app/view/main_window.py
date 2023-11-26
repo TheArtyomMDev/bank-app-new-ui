@@ -101,14 +101,14 @@ class MainWindow(FluentWindow):
             widget=NavigationAvatarWidget(config.get_tag(), ':/gallery/images/shoko.png'),
             position=NavigationItemPosition.BOTTOM
         )
-        self.addSubInterface(
-            self.settingInterface, FIF.SETTING, self.tr('Settings'), NavigationItemPosition.BOTTOM)
+        # self.addSubInterface(
+        #     self.settingInterface, FIF.SETTING, self.tr('Settings'), NavigationItemPosition.BOTTOM)
 
     def initWindow(self):
         self.resize(960, 780)
         self.setMinimumWidth(760)
         self.setWindowIcon(QIcon(':/gallery/images/logo.png'))
-        self.setWindowTitle('PyQt-Fluent-Widgets')
+        self.setWindowTitle('Banky')
 
         self.setMicaEffectEnabled(cfg.get(cfg.micaEnabled))
 
