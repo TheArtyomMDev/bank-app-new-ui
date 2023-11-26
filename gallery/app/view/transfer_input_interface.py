@@ -107,4 +107,4 @@ class TransferMoneyInputInterface(GalleryInterface):
         )
 
     def do_proceed(self):
-        api.transfer(self.users_tags[self.receiver]['uid'], self.money_input.value(), "deafult message")
+        api.transfer(self.users_tags[self.receiver]['uid'], self.money_input.value(), "default message")

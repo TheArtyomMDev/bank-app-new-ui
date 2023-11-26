@@ -31,7 +31,7 @@ class ServerApi:
 
     def get_balance(self):
         res = self.exec_request("/get_balance", "GET")
-        print(res)
+        # print(res)
         return res["data"]["balance"]
 
     def get_tag(self):
@@ -41,12 +41,12 @@ class ServerApi:
 
     def get_transactions(self):
         res = self.exec_request("/transactions", "GET")
-        # print(res)
+        print(res)
         return res["data"]
 
     def get_users(self):
         res = self.exec_request("/search_users", "POST", {})
-        print(res)
+        # print(res)
         return res["data"]["users"]
 
     @passcode_setup

@@ -1,19 +1,17 @@
 from PyQt5 import QtGui
-from PyQt5.QtCore import QUrl, Qt
-from PyQt5.QtGui import QDesktopServices
-from PyQt5.QtWidgets import QLabel, QFrame, QVBoxLayout, QHBoxLayout, QWidget
-from qfluentwidgets import TextWrap, FluentIcon, InfoBarIcon
-from qfluentwidgets.components.widgets.flyout import IconWidget, Flyout
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QLabel, QFrame, QHBoxLayout, QWidget
+from qfluentwidgets import FluentIcon as FIF
+from qfluentwidgets.components.widgets.flyout import Flyout
 
 from gallery.app.common.style_sheet import StyleSheet
 
-from qfluentwidgets import FluentIcon as FIF
 
 class TransactionCard(QFrame):
 
     def __init__(self, amount, sender, message, parent=None):
         super().__init__(parent=parent)
-        self.setFixedHeight(120)
+        self.setFixedHeight(60)
         # self.iconWidget = IconWidget(icon, self)
         self.amountLabel = QLabel(amount, self)
         self.senderLabel = QLabel(sender, self)
@@ -25,20 +23,13 @@ class TransactionCard(QFrame):
     def __initWidget(self):
         self.setCursor(Qt.PointingHandCursor)
 
-        # self.iconWidget.setFixedSize(54, 54)
-        # self.urlWidget.setFixedSize(16, 16)
-
         self.hBoxLayout = QHBoxLayout(self)
         self.hBoxLayout.setSpacing(0)
-        self.hBoxLayout.setContentsMargins(24, 24, 24, 24)
-        # self.vBoxLayout.addWidget(self.iconWidget)
-        # self.vBoxLayout.addSpacing(16)
+        self.hBoxLayout.setContentsMargins(24, 0, 24, 0)
         self.hBoxLayout.addWidget(self.amountLabel)
         self.hBoxLayout.addStretch()
         self.hBoxLayout.addWidget(self.senderLabel)
         self.hBoxLayout.addSpacing(2)
-        # self.vBoxLayout.setAlignment(Qt.AlignLeft | Qt.AlignTop)
-        # self.urlWidget.move(170, 192)
 
         self.amountLabel.setObjectName('titleLabel')
         self.senderLabel.setObjectName('titleLabel')
@@ -48,6 +39,7 @@ class TransactionCard(QFrame):
         StyleSheet.TRANSACTION_CARD.apply(self)
 
     def mouseReleaseEvent(self, a0: QtGui.QMouseEvent):
+        super().mouseReleaseEvent(a0)
         self.showFlyout()
 
     def showFlyout(self):
