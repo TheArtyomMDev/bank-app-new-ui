@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QStackedWidget, QVBoxLayout, 
 from qfluentwidgets import Pivot, setTheme, Theme, SegmentedWidget, FluentIcon
 
 from gallery.app.common.style_sheet import StyleSheet
+from login.screens.Email import EmailWidget
 from login.screens.Login import LoginWidget
 from login.screens.Signup import SignupWidget
 
@@ -27,10 +28,12 @@ class LoginWindow(QWidget):
 
         self.loginScreen = LoginWidget(onMyLogged)
         self.signupScreen = SignupWidget(onMyLogged)
+        self.emailScreen = EmailWidget(onMyLogged)
 
         # add items to pivot
         self.addSubInterface(self.loginScreen, 'songInterface', 'Login')
         self.addSubInterface(self.signupScreen, 'albumInterface', 'SignUp')
+        self.addSubInterface(self.emailScreen, 'emailInterface', 'Email')
 
         self.vBoxLayout.addWidget(self.pivot)
         self.vBoxLayout.addWidget(self.stackedWidget)

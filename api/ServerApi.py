@@ -83,6 +83,23 @@ class ServerApi:
         else:
             onFailed(res["reason"])
 
+    @passcode_setup
+    def verify_otp(self, email, otp, onLogged, onFailed, passcode):
+        res = self.exec_request("/verify_email_code", "POST", {
+            "email": email,
+            "otp": otp,
+            "passcode": passcode
+        })
+
+        print(res)
+
+        if res["status"] == "OK":
+            self.refresh_token = res["data"]["refresh_token"]
+            self.access_token = res["data"]["access_token"]
+            onLogged(self.refresh_token)
+        else:
+            onFailed(res["reason"])
+
     def set_token(self, token):
         self.refresh_token = token
 
@@ -102,3 +119,13 @@ class ServerApi:
             headers["Passcode"] = passcode
 
         return requests.request(method, self.SERVER_URL + path, headers=headers, json=body).json()
+
+    def send_otp(self, email, onSuccess, onError):
+        res = self.exec_request("/request_email_code", "POST", {
+            "email": email
+        })
+
+        if res["status"] == "OK":
+            onSuccess()
+        else:
+            onError(res["reason"])

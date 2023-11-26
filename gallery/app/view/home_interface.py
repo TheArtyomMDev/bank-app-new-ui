@@ -166,6 +166,8 @@ class HomeInterface(ScrollArea):
             elem["type"] = "receiver"
             transactions.append(elem)
 
+        transactions.sort(key=lambda x: x["time"], reverse=True)
+
         for elem in transactions:
             item = QListWidgetItem()
             self.transactionList.addItem(item)
