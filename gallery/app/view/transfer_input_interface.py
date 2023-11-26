@@ -1,6 +1,7 @@
 # coding:utf-8
 import math
 
+from PyQt5 import QtGui
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QAction, QWidget, QVBoxLayout, QButtonGroup, QCompleter, QTextEdit, QHBoxLayout, QLabel, \
