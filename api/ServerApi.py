@@ -18,6 +18,24 @@ class ServerApi:
         if config.is_logged():
             self.__set_token(config.get_token())
 
+    @passcode_setup
+    def signup(self, email, password, tag, onLogged, onFailed, passcode):
+        res = self.exec_request("/signup", "POST", {
+            "email": email,
+            "password": password,
+            "tag": tag,
+            "passcode": passcode,
+        })
+
+        print(res)
+
+        if res["status"] == "OK":
+            self.refresh_token = res["data"]["refresh_token"]
+            self.access_token = res["data"]["access_token"]
+            onLogged(self.refresh_token)
+        else:
+            onFailed(res["reason"])
+
     @passcode_required
     def transfer(self, receiver, amount, message, onFinished, passcode):
         res = self.exec_request("/transfer_money", "POST", {

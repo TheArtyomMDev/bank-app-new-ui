@@ -8,6 +8,8 @@ from qfluentwidgets import Pivot, setTheme, Theme, SegmentedWidget, FluentIcon
 
 from gallery.app.common.style_sheet import StyleSheet
 from login.screens.Login import LoginWidget
+from login.screens.Signup import SignupWidget
+
 
 class LoginWindow(QWidget):
 
@@ -23,20 +25,20 @@ class LoginWindow(QWidget):
         self.stackedWidget = QStackedWidget(self)
         self.vBoxLayout = QVBoxLayout(self)
 
-        self.songInterface = LoginWidget(onMyLogged)
-        self.albumInterface = QLabel('Album Interface', self)
+        self.loginScreen = LoginWidget(onMyLogged)
+        self.signupScreen = SignupWidget(onMyLogged)
 
         # add items to pivot
-        self.addSubInterface(self.songInterface, 'songInterface', 'Login')
-        self.addSubInterface(self.albumInterface, 'albumInterface', 'SignUp')
+        self.addSubInterface(self.loginScreen, 'songInterface', 'Login')
+        self.addSubInterface(self.signupScreen, 'albumInterface', 'SignUp')
 
         self.vBoxLayout.addWidget(self.pivot)
         self.vBoxLayout.addWidget(self.stackedWidget)
         self.vBoxLayout.setContentsMargins(30, 10, 30, 30)
 
         self.stackedWidget.currentChanged.connect(self.onCurrentIndexChanged)
-        self.stackedWidget.setCurrentWidget(self.songInterface)
-        self.pivot.setCurrentItem(self.songInterface.objectName())
+        self.stackedWidget.setCurrentWidget(self.loginScreen)
+        self.pivot.setCurrentItem(self.loginScreen.objectName())
 
         self.setObjectName('view')
         StyleSheet.GALLERY_INTERFACE.apply(self)

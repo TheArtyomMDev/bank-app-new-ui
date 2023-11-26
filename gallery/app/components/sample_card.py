@@ -3,7 +3,6 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout
 from qfluentwidgets import IconWidget, TextWrap, FlowLayout, CardWidget
 
-from qtacrylic import WindowEffect
 from ..common.signal_bus import signalBus
 from ..common.style_sheet import StyleSheet
 

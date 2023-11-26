@@ -38,7 +38,7 @@ class TransferMoneyInputInterface(GalleryInterface):
     def set_receiver(self, receiver):
         self.receiver = receiver
 
-        if self.receiver in self.users_tags:
+        if self.receiver in self.users_tags and self.cur_balance > 1:
             self.pb.setEnabled(True)
         else:
             self.pb.setEnabled(False)
@@ -79,18 +79,23 @@ class TransferMoneyInputInterface(GalleryInterface):
         widget = QWidget()
         layout = QHBoxLayout(widget)
 
-        cur_balance = api.get_balance()
+        self.cur_balance = api.get_balance()
         for _ in range(1):
             layout.addWidget(MoneyCard(icon=":/gallery/images/controls/Card.png",
                                        title="**** 1256",
-                                       content=str(cur_balance)))
+                                       content=str(self.cur_balance )))
 
         layout.addStretch()
         lay.addWidget(widget)
 
         self.money_input = DoubleSpinBox(self)
-        self.money_input.setRange(1, cur_balance)
+
+        self.money_input.setRange(1, self.cur_balance )
         self.money_input.setMaximumWidth(200)
+
+        if self.cur_balance < 1:
+            self.money_input.setEnabled(False)
+
         lay.addSpacing(10)
         lay.addWidget(self.money_input)
 
@@ -98,6 +103,7 @@ class TransferMoneyInputInterface(GalleryInterface):
             '',
             main_widget
         )
+
 
         self.pb = PrimaryPushButton(self.tr('Proceed'))
         self.pb.setEnabled(False)
