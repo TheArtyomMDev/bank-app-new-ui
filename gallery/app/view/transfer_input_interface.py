@@ -36,13 +36,14 @@ class TransferMoneyInputInterface(GalleryInterface):
     def set_receiver(self, receiver):
         self.receiver = receiver
 
-        if self.receiver in self.users_tags and self.cur_balance > 1:
+        if self.receiver in self.users_tags and self.cur_balance >= 1:
             self.pb.setEnabled(True)
         else:
             self.pb.setEnabled(False)
 
     def __init__(self, parent=None):
         translator = Translator()
+        self.parent = parent
         self.users = api.get_users()
         self.users_tags = {user["tag"]: user for user in self.users}
 
@@ -102,16 +103,35 @@ class TransferMoneyInputInterface(GalleryInterface):
             main_widget
         )
 
+        lay = QVBoxLayout()
+
+        self.message = LineEdit(self)
+        self.message.setPlaceholderText("Your Message")
+
         self.pb = PrimaryPushButton(self.tr('Proceed'))
         self.pb.setEnabled(False)
+        self.pb.setMaximumWidth(200)
         self.pb.clicked.connect(self.do_proceed)
+
+        lay.addWidget(self.message)
+        lay.addWidget(self.pb)
+
+        tmp_widget = QWidget()
+        tmp_widget.setLayout(lay)
+        tmp_widget.setFixedWidth(500)
+
         self.addExampleCard(
             '',
-            self.pb,
+            tmp_widget,
         )
 
     def do_proceed(self):
-        api.transfer(self.users_tags[self.receiver]['uid'], self.money_input.value(), "default message", self.on_transfer_finished)
+        api.transfer(
+            self.users_tags[self.receiver]['uid'],
+            self.money_input.value(),
+            self.message.text(),
+            self.on_transfer_finished
+        )
 
     def on_transfer_finished(self, res):
         print(res)
@@ -124,7 +144,7 @@ class TransferMoneyInputInterface(GalleryInterface):
                 isClosable=True,
                 position=InfoBarPosition.BOTTOM_RIGHT,
                 duration=5000,
-                parent=self
+                parent= self.parent
             )
         else:
             InfoBar.error(
@@ -134,5 +154,5 @@ class TransferMoneyInputInterface(GalleryInterface):
                 isClosable=True,
                 position=InfoBarPosition.BOTTOM_RIGHT,
                 duration=-1,
-                parent=self
+                parent= self.parent
             )

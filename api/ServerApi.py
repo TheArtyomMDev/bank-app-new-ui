@@ -129,3 +129,7 @@ class ServerApi:
             onSuccess()
         else:
             onError(res["reason"])
+
+    def get_exchange_rates(self):
+        res = self.exec_request("/exchange_rates", "GET")
+        return res["data"]
