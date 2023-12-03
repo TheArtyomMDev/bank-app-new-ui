@@ -40,9 +40,9 @@ class TransactionCard(QFrame):
 
     def mouseReleaseEvent(self, a0: QtGui.QMouseEvent):
         super().mouseReleaseEvent(a0)
-        self.showFlyout()
+        self.show_flyout()
 
-    def showFlyout(self):
+    def show_flyout(self):
         Flyout.create(
             icon=FIF.MESSAGE,
             title='Message:',
