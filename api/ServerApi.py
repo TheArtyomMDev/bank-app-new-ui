@@ -66,7 +66,7 @@ class ServerApi:
         return res["data"]["users"]
 
     @passcode_setup
-    def login(self, email, password, onLogged, onFailed, passcode):
+    def login(self, email, password, on_logged, on_failed, passcode):
         res = self.exec_request("/signin", "POST", {
             "email": email,
             "password": password,
@@ -78,12 +78,12 @@ class ServerApi:
         if res["status"] == "OK":
             self.refresh_token = res["data"]["refresh_token"]
             self.access_token = res["data"]["access_token"]
-            onLogged(self.refresh_token)
+            on_logged(self.refresh_token)
         else:
-            onFailed(res["reason"])
+            on_failed(res["reason"])
 
     @passcode_setup
-    def verify_otp(self, email, otp, onLogged, onFailed, passcode):
+    def verify_otp(self, email, otp, on_logged, on_failed, passcode):
         res = self.exec_request("/verify_email_code", "POST", {
             "email": email,
             "otp": otp,
@@ -95,9 +95,9 @@ class ServerApi:
         if res["status"] == "OK":
             self.refresh_token = res["data"]["refresh_token"]
             self.access_token = res["data"]["access_token"]
-            onLogged(self.refresh_token)
+            on_logged(self.refresh_token)
         else:
-            onFailed(res["reason"])
+            on_failed(res["reason"])
 
     def set_token(self, token):
         self.refresh_token = token

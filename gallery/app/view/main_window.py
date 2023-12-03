@@ -12,7 +12,7 @@ from .gallery_interface import GalleryInterface
 from .home_interface import HomeInterface
 from .transfer_input_interface import TransferMoneyInputInterface
 from ..common.config import cfg
-from ..common.signal_bus import signalBus
+from ..common.signal_bus import signal_bus
 from ..common.translator import Translator
 
 config = ConfigManager()
@@ -40,8 +40,8 @@ class MainWindow(FluentWindow):
         self.splashScreen.finish()
 
     def connectSignalToSlot(self):
-        signalBus.micaEnableChanged.connect(self.setMicaEffectEnabled)
-        signalBus.switchToSampleCard.connect(self.switch_to_sample)
+        signal_bus.mica_enable_changed.connect(self.setMicaEffectEnabled)
+        signal_bus.switch_to_sample_card.connect(self.switch_to_sample)
 
     def initNavigation(self):
         # add navigation items

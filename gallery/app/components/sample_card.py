@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout
 from qfluentwidgets import IconWidget, TextWrap, FlowLayout, CardWidget
 
-from ..common.signal_bus import signalBus
+from ..common.signal_bus import signal_bus
 from ..common.style_sheet import StyleSheet
 
 
@@ -38,7 +38,7 @@ class SampleCard(CardWidget):
 
     def mouseReleaseEvent(self, e):
         super().mouseReleaseEvent(e)
-        signalBus.switchToSampleCard.emit(self.routekey, self.index)
+        signal_bus.switch_to_sample_card.emit(self.routekey, self.index)
 
 
 class SampleCardView(QWidget):
