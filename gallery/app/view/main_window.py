@@ -1,35 +1,19 @@
 # coding: utf-8
-from PyQt5.QtCore import QUrl, QSize
-from PyQt5.QtGui import QIcon, QDesktopServices
+from PyQt5.QtCore import QSize
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication
-
-from qfluentwidgets import (NavigationAvatarWidget, NavigationItemPosition, MessageBox, FluentWindow,
-                            SplashScreen)
 from qfluentwidgets import FluentIcon as FIF
+from qfluentwidgets import (NavigationAvatarWidget, NavigationItemPosition, FluentWindow,
+                            SplashScreen)
 
 from helpers.ConfigManager import ConfigManager
 from .exchange_input_interface import ExchangeInputInterface
 from .gallery_interface import GalleryInterface
 from .home_interface import HomeInterface
-from .basic_input_interface import BasicInputInterface
-from .date_time_interface import DateTimeInterface
-from .dialog_interface import DialogInterface
-from .layout_interface import LayoutInterface
-from .icon_interface import IconInterface
-from .material_interface import MaterialInterface
-from .menu_interface import MenuInterface
-from .navigation_view_interface import NavigationViewInterface
-from .scroll_interface import ScrollInterface
-from .status_info_interface import StatusInfoInterface
-from .setting_interface import SettingInterface
-from .text_interface import TextInterface
 from .transfer_input_interface import TransferMoneyInputInterface
-from .view_interface import ViewInterface
-from ..common.config import SUPPORT_URL, cfg
-from ..common.icon import Icon
+from ..common.config import cfg
 from ..common.signal_bus import signalBus
 from ..common.translator import Translator
-
 
 config = ConfigManager()
 
