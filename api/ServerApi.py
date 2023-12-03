@@ -1,11 +1,10 @@
-from asyncio import Future
-
 import requests
 
 from helpers.ConfigManager import ConfigManager
 from helpers.PasscodeRequest import passcode_setup, passcode_required
 
 config = ConfigManager()
+
 
 class ServerApi:
     SERVER_URL = "http://localhost:5000"
@@ -19,7 +18,7 @@ class ServerApi:
             self.set_token(config.get_token())
 
     @passcode_setup
-    def signup(self, email, password, tag, onLogged, onFailed, passcode):
+    def signup(self, email, password, tag, on_logged, on_failed, passcode):
         res = self.exec_request("/signup", "POST", {
             "email": email,
             "password": password,
@@ -32,19 +31,19 @@ class ServerApi:
         if res["status"] == "OK":
             self.refresh_token = res["data"]["refresh_token"]
             self.access_token = res["data"]["access_token"]
-            onLogged(self.refresh_token)
+            on_logged(self.refresh_token)
         else:
-            onFailed(res["reason"])
+            on_failed(res["reason"])
 
     @passcode_required
-    def transfer(self, receiver, amount, message, onFinished, passcode):
+    def transfer(self, receiver, amount, message, on_finished, passcode):
         res = self.exec_request("/transfer_money", "POST", {
             "receiver": receiver,
             "amount": amount,
             "message": message
         }, passcode=passcode)
 
-        onFinished(res)
+        on_finished(res)
 
     def get_balance(self):
         res = self.exec_request("/get_balance", "GET")

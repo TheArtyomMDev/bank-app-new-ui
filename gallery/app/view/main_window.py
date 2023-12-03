@@ -40,7 +40,7 @@ class MainWindow(FluentWindow):
 
     def connectSignalToSlot(self):
         signalBus.micaEnableChanged.connect(self.setMicaEffectEnabled)
-        signalBus.switchToSampleCard.connect(self.switchToSample)
+        signalBus.switchToSampleCard.connect(self.switch_to_sample)
 
     def initNavigation(self):
         # add navigation items
@@ -81,7 +81,7 @@ class MainWindow(FluentWindow):
         if hasattr(self, 'splashScreen'):
             self.splashScreen.resize(self.size())
 
-    def switchToSample(self, routeKey, index):
+    def switch_to_sample(self, routeKey, index):
         """ switch to sample """
         interfaces = self.findChildren(GalleryInterface)
         for w in interfaces:
