@@ -56,11 +56,11 @@ class ExchangeRatesTable(TableWidget):
         self.th.started.connect(self.worker.startWork)
         self.worker.finished.connect(self.th.quit)
         self.worker.finished.connect(self.worker.deleteLater)
-        self.worker.finished.connect(self.updateTable)
+        self.worker.finished.connect(self.update_table)
 
         self.th.start()
 
-    def updateTable(self):
+    def update_table(self):
         self.setRowCount(len(self.rates))
         print(self.rates)
         final_rates = []

@@ -26,22 +26,22 @@ class BannerWidget(QWidget):
         self.setFixedHeight(336)
 
         self.view = QWidget(self)
-        self.vBoxLayout = QVBoxLayout(self)
+        self.v_box_layout = QVBoxLayout(self)
 
-        self.galleryLabel = QLabel(f'Welcome back, {config.get_tag()}!', self)
+        self.gallery_label = QLabel(f'Welcome back, {config.get_tag()}!', self)
         self.banner = QPixmap(':/gallery/images/header1.png')
         # self.linkCardView = LinkCardView(self)
 
-        basicInputView = SampleCardView(
+        basic_input_view = SampleCardView(
             self.tr("Quick Actions"), self.view)
-        basicInputView.addSampleCard(
+        basic_input_view.addSampleCard(
             icon=":/gallery/images/controls/Money.png",
             title="Transfer money",
             content=self.tr("Just 2 clicks to get it done!"),
             routeKey="transferInputInterface",
             index=0
         )
-        basicInputView.addSampleCard(
+        basic_input_view.addSampleCard(
             icon=":/gallery/images/controls/Stats.png",
             title="Exchange rates",
             content=self.tr("Wanna buy those green sheets?"),
@@ -49,13 +49,13 @@ class BannerWidget(QWidget):
             index=0
         )
 
-        self.galleryLabel.setObjectName('galleryLabel')
+        self.gallery_label.setObjectName('galleryLabel')
 
-        self.vBoxLayout.setSpacing(0)
-        self.vBoxLayout.setContentsMargins(0, 20, 0, 0)
-        self.vBoxLayout.addWidget(self.galleryLabel)
-        self.vBoxLayout.addWidget(basicInputView, 1, Qt.AlignBottom)
-        self.vBoxLayout.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+        self.v_box_layout.setSpacing(0)
+        self.v_box_layout.setContentsMargins(0, 20, 0, 0)
+        self.v_box_layout.addWidget(self.gallery_label)
+        self.v_box_layout.addWidget(basic_input_view, 1, Qt.AlignBottom)
+        self.v_box_layout.setAlignment(Qt.AlignLeft | Qt.AlignTop)
 
     def paintEvent(self, e):
         super().paintEvent(e)
@@ -104,7 +104,7 @@ class HomeInterface(ScrollArea):
         self.vBoxLayout = QVBoxLayout(self.view)
 
         self.__initWidget()
-        self.loadSamples()
+        self.load_widgets()
 
     def __initWidget(self):
         self.view.setObjectName('view')
@@ -120,7 +120,7 @@ class HomeInterface(ScrollArea):
         self.vBoxLayout.addWidget(self.banner)
         self.vBoxLayout.setAlignment(Qt.AlignTop)
 
-    def loadSamples(self):
+    def load_widgets(self):
         main_v_layout = QVBoxLayout()
         main_v_layout.setContentsMargins(40, 0, 0, 0)
 
@@ -130,10 +130,10 @@ class HomeInterface(ScrollArea):
 
         title_layout = QHBoxLayout()
         title_layout.addWidget(title)
-        self.updateIndicator = IndeterminateProgressRing(self)
-        self.updateIndicator.setFixedSize(50, 50)
-        self.updateIndicator.setVisible(False)
-        title_layout.addWidget(self.updateIndicator)
+        self.update_indicator = IndeterminateProgressRing(self)
+        self.update_indicator.setFixedSize(50, 50)
+        self.update_indicator.setVisible(False)
+        title_layout.addWidget(self.update_indicator)
 
         tmp_widget = QWidget()
         tmp_widget.setLayout(title_layout)
@@ -141,12 +141,12 @@ class HomeInterface(ScrollArea):
 
         main_v_layout.addWidget(tmp_widget)
 
-        self.transactionList = ListWidget()
-        self.transactionList.setSpacing(5)
+        self.transaction_list = ListWidget()
+        self.transaction_list.setSpacing(5)
 
-        self.transactionList.setFixedWidth(500)
+        self.transaction_list.setFixedWidth(500)
 
-        main_v_layout.addWidget(self.transactionList)
+        main_v_layout.addWidget(self.transaction_list)
 
         temp_widget = QWidget()
         temp_widget.setLayout(main_v_layout)
@@ -156,7 +156,7 @@ class HomeInterface(ScrollArea):
         self.updateTransactions()
 
     def updateTransactionsView(self):
-        self.transactionList.clear()
+        self.transaction_list.clear()
         transactions = []
         for elem in self.all_trans["sender"]:
             elem["type"] = "sender"
@@ -170,7 +170,7 @@ class HomeInterface(ScrollArea):
 
         for elem in transactions:
             item = QListWidgetItem()
-            self.transactionList.addItem(item)
+            self.transaction_list.addItem(item)
 
             if elem["type"] == "sender":
                 prefix = "-"
@@ -180,12 +180,12 @@ class HomeInterface(ScrollArea):
             date = datetime.datetime.fromtimestamp(elem["time"]).strftime("%Y-%m-%d %H:%M:%S")
             card = TransactionCard(f"{prefix} {elem['amount']}", date, elem["message"])
 
-            self.transactionList.setItemWidget(item, card)
+            self.transaction_list.setItemWidget(item, card)
 
-        self.updateIndicator.setVisible(False)
+        self.update_indicator.setVisible(False)
 
     def updateTransactions(self):
-        self.updateIndicator.setVisible(True)
+        self.update_indicator.setVisible(True)
 
         class UpdateTransactions(QObject):
             finished = pyqtSignal()
@@ -201,7 +201,6 @@ class HomeInterface(ScrollArea):
         self.th.started.connect(self.worker.startWork)
         self.worker.finished.connect(self.th.quit)
         self.worker.finished.connect(self.worker.deleteLater)
-        # self.th.finished.connect(self.th.deleteLater)
         self.worker.finished.connect(self.updateTransactionsView)
 
         self.th.start()
