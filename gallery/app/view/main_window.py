@@ -17,6 +17,7 @@ from ..common.translator import Translator
 
 config = ConfigManager()
 
+
 class MainWindow(FluentWindow):
 
     def __init__(self):
@@ -57,6 +58,7 @@ class MainWindow(FluentWindow):
             widget=NavigationAvatarWidget(config.get_tag(), ':/gallery/images/shoko.png'),
             position=NavigationItemPosition.BOTTOM
         )
+
     def initWindow(self):
         self.resize(960, 780)
         self.setMinimumWidth(760)
@@ -72,7 +74,7 @@ class MainWindow(FluentWindow):
 
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
-        self.move(w//2 - self.width()//2, h//2 - self.height()//2)
+        self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
         self.show()
         QApplication.processEvents()
 
@@ -81,10 +83,10 @@ class MainWindow(FluentWindow):
         if hasattr(self, 'splashScreen'):
             self.splashScreen.resize(self.size())
 
-    def switch_to_sample(self, routeKey, index):
+    def switch_to_sample(self, route_key, index):
         """ switch to sample """
         interfaces = self.findChildren(GalleryInterface)
         for w in interfaces:
-            if w.objectName() == routeKey:
+            if w.objectName() == route_key:
                 self.stackedWidget.setCurrentWidget(w, False)
                 w.scrollToCard(index)

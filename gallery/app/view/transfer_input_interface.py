@@ -1,30 +1,16 @@
 # coding:utf-8
-import math
 
-from PyQt5 import QtGui
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QAction, QWidget, QVBoxLayout, QButtonGroup, QCompleter, QTextEdit, QHBoxLayout, QLabel, \
-    QSizePolicy
-from qfluentwidgets import (Action, DropDownPushButton, DropDownToolButton, PushButton, ToolButton, PrimaryPushButton,
-                            HyperlinkButton, ComboBox, RadioButton, CheckBox, Slider, SwitchButton, EditableComboBox,
-                            ToggleButton, RoundMenu, FluentIcon, SplitPushButton, SplitToolButton,
-                            PrimarySplitToolButton,
-                            PrimarySplitPushButton, PrimaryDropDownPushButton, PrimaryToolButton,
-                            PrimaryDropDownToolButton,
-                            ToggleToolButton, TransparentDropDownPushButton, TransparentPushButton,
-                            TransparentToggleToolButton,
-                            TransparentTogglePushButton, TransparentDropDownToolButton, TransparentToolButton,
-                            PillPushButton, PillToolButton, LineEdit, SearchLineEdit, FlowLayout, DoubleSpinBox,
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QCompleter, QHBoxLayout
+from qfluentwidgets import (PrimaryPushButton,
+                            LineEdit, SearchLineEdit, DoubleSpinBox,
                             TitleLabel, InfoBar, InfoBarPosition)
 
 from helpers import InstanceHolders
 from helpers.ConfigManager import ConfigManager
 from .gallery_interface import GalleryInterface
-from ..common.style_sheet import StyleSheet
 from ..common.translator import Translator
 from ..components.money_card import MoneyCard
-from ..components.sample_card import SampleCard, SampleCardView
 
 api = InstanceHolders.api
 config = ConfigManager()
@@ -54,20 +40,20 @@ class TransferMoneyInputInterface(GalleryInterface):
         )
         self.setObjectName('transferInputInterface')
 
-        self.lineEdit = SearchLineEdit(self)
-        self.lineEdit.setPlaceholderText(self.tr('Receiver'))
-        self.lineEdit.setClearButtonEnabled(True)
-        self.lineEdit.setFixedWidth(300)
-        self.lineEdit.textChanged.connect(lambda: self.set_receiver(self.lineEdit.text()))
+        self.search_line_edit = SearchLineEdit(self)
+        self.search_line_edit.setPlaceholderText(self.tr('Receiver'))
+        self.search_line_edit.setClearButtonEnabled(True)
+        self.search_line_edit.setFixedWidth(300)
+        self.search_line_edit.textChanged.connect(lambda: self.set_receiver(self.search_line_edit.text()))
 
-        completer = QCompleter(self.users_tags, self.lineEdit)
+        completer = QCompleter(self.users_tags, self.search_line_edit)
         completer.setCaseSensitivity(Qt.CaseInsensitive)
         completer.setMaxVisibleItems(10)
-        self.lineEdit.setCompleter(completer)
+        self.search_line_edit.setCompleter(completer)
 
         self.addExampleCard(
             "",
-            self.lineEdit,
+            self.search_line_edit,
         )
 
         main_widget = QWidget()
@@ -82,14 +68,14 @@ class TransferMoneyInputInterface(GalleryInterface):
         for _ in range(1):
             layout.addWidget(MoneyCard(icon=":/gallery/images/controls/Card.png",
                                        title="**** 1256",
-                                       content=str(self.cur_balance )))
+                                       content=str(self.cur_balance)))
 
         layout.addStretch()
         lay.addWidget(widget)
 
         self.money_input = DoubleSpinBox(self)
 
-        self.money_input.setRange(1, self.cur_balance )
+        self.money_input.setRange(1, self.cur_balance)
         self.money_input.setMaximumWidth(200)
 
         if self.cur_balance < 1:
@@ -144,7 +130,7 @@ class TransferMoneyInputInterface(GalleryInterface):
                 isClosable=True,
                 position=InfoBarPosition.BOTTOM_RIGHT,
                 duration=5000,
-                parent= self.parent
+                parent=self.parent
             )
         else:
             InfoBar.error(
@@ -154,5 +140,5 @@ class TransferMoneyInputInterface(GalleryInterface):
                 isClosable=True,
                 position=InfoBarPosition.BOTTOM_RIGHT,
                 duration=-1,
-                parent= self.parent
+                parent=self.parent
             )
