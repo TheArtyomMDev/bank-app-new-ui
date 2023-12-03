@@ -5,9 +5,9 @@ from PyQt5.QtCore import QObject, pyqtSignal
 class SignalBus(QObject):
     """ Signal bus """
 
-    switchToSampleCard = pyqtSignal(str, int)
-    micaEnableChanged = pyqtSignal(bool)
-    supportSignal = pyqtSignal()
+    switch_to_sample_card = pyqtSignal(str, int)
+    mica_enable_changed = pyqtSignal(bool)
+    support_signal = pyqtSignal()
 
 
-signalBus = SignalBus()
+signal_bus = SignalBus()

@@ -15,6 +15,7 @@
         <file>images/controls/CalendarDatePicker.png</file>
         <file>images/controls/CalendarView.png</file>
         <file>images/controls/Canvas.png</file>
+        <file>images/controls/Card.png</file>
         <file>images/controls/Checkbox.png</file>
         <file>images/controls/Clipboard.png</file>
         <file>images/controls/ColorPaletteResources.png</file>
@@ -52,6 +53,7 @@
         <file>images/controls/MediaPlayerElement.png</file>
         <file>images/controls/MenuBar.png</file>
         <file>images/controls/MenuFlyout.png</file>
+        <file>images/controls/Money.png</file>
         <file>images/controls/NavigationView.png</file>
         <file>images/controls/NumberBox.png</file>
         <file>images/controls/PageTransition.png</file>
@@ -81,6 +83,7 @@
         <file>images/controls/SplitView.png</file>
         <file>images/controls/StackPanel.png</file>
         <file>images/controls/StandardUICommand.png</file>
+        <file>images/controls/Stats.png</file>
         <file>images/controls/SwipeControl.png</file>
         <file>images/controls/TabView.png</file>
         <file>images/controls/TeachingTip.png</file>
@@ -113,6 +116,7 @@
         <file>images/chidanta5.jpg</file>
         <file>images/header.png</file>
         <file>images/header1.png</file>
+        <file>images/header2.png</file>
         <file>images/kunkun.png</file>
         <file>images/logo.png</file>
         <file>images/shoko.png</file>
