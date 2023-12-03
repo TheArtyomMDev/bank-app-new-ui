@@ -10,13 +10,13 @@ from gallery.app.common.style_sheet import StyleSheet
 class PasscodeWidget(QWidget):
 
 
-    def __init__(self, help_text: str, onPasscodeEntered):
+    def __init__(self, help_text: str, on_passcode_entered):
         super().__init__()
 
         self.passcode = ""
         self.pass_fields: list[LineEdit] = []
 
-        self.onPasscodeEntered = onPasscodeEntered
+        self.on_passcode_entered = on_passcode_entered
 
         self.setFixedSize(400, 200)
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowCloseButtonHint)
@@ -58,13 +58,10 @@ class PasscodeWidget(QWidget):
     def keyPressEvent(self, event: QKeyEvent):
         super().keyPressEvent(event)
 
-        text = f'{event.key()} : {event.text()!r}'
         if event.text().isdigit() and len(self.passcode) < 4:
             self.passcode += event.text()
         elif event.key() == 16777219 and len(self.passcode) > 0:
-            print(self.passcode)
             self.passcode = self.passcode[0:-1]
-            print(self.passcode)
 
         for i in range(len(self.pass_fields)):
             if i < len(self.passcode):
@@ -72,7 +69,5 @@ class PasscodeWidget(QWidget):
             else:
                 self.pass_fields[i].setText("")
 
-        print(self.passcode + " " + str(len(self.passcode)) + ' ' + str(len(self.pass_fields)))
-
         if len(self.passcode) == 4:
-            self.onPasscodeEntered(self.passcode)
+            self.on_passcode_entered(self.passcode)

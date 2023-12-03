@@ -13,10 +13,10 @@ class TagNotValidError(Exception):
     pass
 
 class SignupWidget(QWidget):
-    def __init__(self, onLogged):
+    def __init__(self, on_logged):
         super().__init__()
 
-        self.onLogged = onLogged
+        self.onLogged = on_logged
 
         lay = QVBoxLayout()
 

@@ -9,11 +9,12 @@ from api.ServerApi import ServerApi
 class PasswordNotValidError(Exception):
     pass
 
+
 class LoginWidget(QWidget):
-    def __init__(self, onLogged):
+    def __init__(self, on_logged):
         super().__init__()
 
-        self.onLogged = onLogged
+        self.on_logged = on_logged
 
         lay = QVBoxLayout()
 
@@ -56,12 +57,8 @@ class LoginWidget(QWidget):
                 raise PasswordNotValidError("Password must be at least 6 characters long")
 
             self.set_error("")
-            ServerApi().login(email, password, self.onLogged, self.set_error)
+            ServerApi().login(email, password, self.on_logged, self.set_error)
         except EmailNotValidError as e:
             self.set_error(str(e))
         except PasswordNotValidError as e:
             self.set_error(str(e))
-
-
-
-
