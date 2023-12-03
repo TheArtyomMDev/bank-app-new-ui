@@ -53,7 +53,7 @@ class PasscodeWidget(QWidget):
         self.setObjectName('view')
         StyleSheet.GALLERY_INTERFACE.apply(self)
 
-        blur(self.winId())
+        # blur(self.winId())
 
     def keyPressEvent(self, event: QKeyEvent):
         super().keyPressEvent(event)
