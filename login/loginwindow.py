@@ -14,34 +14,34 @@ from login.screens.Signup import SignupWidget
 
 class LoginWindow(QWidget):
 
-    def __init__(self, onLogged):
+    def __init__(self, on_logged):
         super().__init__()
         self.setFixedSize(400, 400)
 
-        def onMyLogged(token):
-            onLogged(token)
+        def on_my_logged(token):
+            on_logged(token)
             self.destroy()
 
         self.pivot = SegmentedWidget(self)
-        self.stackedWidget = QStackedWidget(self)
-        self.vBoxLayout = QVBoxLayout(self)
+        self.stacked_widget = QStackedWidget(self)
+        self.v_box_layout = QVBoxLayout(self)
 
-        self.loginScreen = LoginWidget(onMyLogged)
-        self.signupScreen = SignupWidget(onMyLogged)
-        self.emailScreen = EmailWidget(onMyLogged)
+        self.login_screen = LoginWidget(on_my_logged)
+        self.signup_screen = SignupWidget(on_my_logged)
+        self.email_screen = EmailWidget(on_my_logged)
 
         # add items to pivot
-        self.addSubInterface(self.loginScreen, 'songInterface', 'Login')
-        self.addSubInterface(self.signupScreen, 'albumInterface', 'SignUp')
-        self.addSubInterface(self.emailScreen, 'emailInterface', 'Email')
+        self.addSubInterface(self.login_screen, 'login_screen', 'Login')
+        self.addSubInterface(self.signup_screen, 'signup_screen', 'SignUp')
+        self.addSubInterface(self.email_screen, 'email_screen', 'Email')
 
-        self.vBoxLayout.addWidget(self.pivot)
-        self.vBoxLayout.addWidget(self.stackedWidget)
-        self.vBoxLayout.setContentsMargins(30, 10, 30, 30)
+        self.v_box_layout.addWidget(self.pivot)
+        self.v_box_layout.addWidget(self.stacked_widget)
+        self.v_box_layout.setContentsMargins(30, 10, 30, 30)
 
-        self.stackedWidget.currentChanged.connect(self.onCurrentIndexChanged)
-        self.stackedWidget.setCurrentWidget(self.loginScreen)
-        self.pivot.setCurrentItem(self.loginScreen.objectName())
+        self.stacked_widget.currentChanged.connect(self.onCurrentIndexChanged)
+        self.stacked_widget.setCurrentWidget(self.login_screen)
+        self.pivot.setCurrentItem(self.login_screen.objectName())
 
         self.setObjectName('view')
         StyleSheet.GALLERY_INTERFACE.apply(self)
@@ -49,25 +49,13 @@ class LoginWindow(QWidget):
     def addSubInterface(self, widget: QWidget, objectName, text):
         widget.setObjectName(objectName)
 
-        self.stackedWidget.addWidget(widget)
+        self.stacked_widget.addWidget(widget)
         self.pivot.addItem(
             routeKey=objectName,
             text=text,
-            onClick=lambda: self.stackedWidget.setCurrentWidget(widget),
+            onClick=lambda: self.stacked_widget.setCurrentWidget(widget),
         )
 
     def onCurrentIndexChanged(self, index):
-        widget = self.stackedWidget.widget(index)
+        widget = self.stacked_widget.widget(index)
         self.pivot.setCurrentItem(widget.objectName())
-
-
-# if __name__ == '__main__':
-#     # enable dpi scale
-#     QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-#     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-#     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
-#
-#     app = QApplication(sys.argv)
-#     w = LoginWindow()
-#     w.show()
-#     app.exec_()
