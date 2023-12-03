@@ -36,45 +36,6 @@ class SampleCard(CardWidget):
         self.titleLabel.setObjectName('titleLabel')
         self.contentLabel.setObjectName('contentLabel')
 
-        # self.blur = QGraphicsBlurEffect()
-        # self.blur.setBlurRadius(100)
-        # self.setGraphicsEffect(QGraphicsBlurEffect())
-
-        # self.setWindowFlags(Qt.FramelessWindowHint)  # make the window frameless
-        # self.setAttribute(Qt.WA_TranslucentBackground)
-        # self.windowFX = WindowEffect()  # instatiate the WindowEffect class
-        # self.windowFX.setAeroEffect(self.winId())  # set the Acrylic effect by specifying the window id
-
-        return
-        self.iconWidget = IconWidget(icon, self)
-        self.amountLabel = QLabel(title, self)
-        self.senderLabel = QLabel(TextWrap.wrap(content, 45, False)[0], self)
-
-        # self.hBoxLayout = QHBoxLayout(self)
-        self.hBoxLayout = QVBoxLayout(self)
-
-        # self.setFixedSize(150, 360)
-        self.setFixedHeight(150)
-        self.iconWidget.setFixedSize(54, 54)
-
-        # self.hBoxLayout.setSpacing(28)
-        # self.hBoxLayout.setContentsMargins(20, 0, 0, 0)
-        # self.vBoxLayout.setSpacing(0)
-        # self.vBoxLayout.setContentsMargins(10, 10, 10, 10)
-        self.hBoxLayout.setAlignment(Qt.AlignVCenter)
-
-        # self.hBoxLayout.setAlignment(Qt.AlignVCenter)
-        self.hBoxLayout.addWidget(self.iconWidget)
-        # self.hBoxLayout.addLayout(self.vBoxLayout)
-        # self.vBoxLayout.addStretch(1)
-        self.hBoxLayout.addWidget(self.amountLabel)
-        self.hBoxLayout.addSpacing(1)
-        self.hBoxLayout.addWidget(self.senderLabel)
-        # self.vBoxLayout.addStretch(1)
-
-        self.amountLabel.setObjectName('titleLabel')
-        self.senderLabel.setObjectName('contentLabel')
-
     def mouseReleaseEvent(self, e):
         super().mouseReleaseEvent(e)
         signalBus.switchToSampleCard.emit(self.routekey, self.index)
@@ -102,8 +63,5 @@ class SampleCardView(QWidget):
         StyleSheet.SAMPLE_CARD.apply(self)
 
     def addSampleCard(self, icon, title, content, routeKey, index):
-        """ add sample card """
         card = SampleCard(icon, title, content, routeKey, index, self)
         self.flowLayout.addWidget(card)
-
-        # self.flowLayout.addWidget(SuperBlurred())

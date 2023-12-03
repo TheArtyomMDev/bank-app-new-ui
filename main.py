@@ -1,18 +1,13 @@
-# enable dpi scale
-
-import pyqt5ac
-
-from api.ServerApi import ServerApi
 from helpers import InstanceHolders
 from helpers.ConfigManager import ConfigManager
 from login.loginwindow import LoginWindow
 
-pyqt5ac.main(uicOptions='--from-imports', force=False, initPackage=True, ioPaths=[
-    # ['gui/*.ui', 'generated/%%FILENAME%%_ui.py'],
-    ['gallery/app/resource/resource.qrc', 'gallery/app/common/resource.py'],
-    # ['modules/*/*.ui', '%%DIRNAME%%/generated/%%FILENAME%%_ui.py'],
-    # ['modules/*/resources/*.qrc', '%%DIRNAME%%/generated/%%FILENAME%%_rc.py']
-])
+# pyqt5ac.main(uicOptions='--from-imports', force=False, initPackage=True, ioPaths=[
+#     # ['gui/*.ui', 'generated/%%FILENAME%%_ui.py'],
+#     ['gallery/app/resource/resource.qrc', 'gallery/app/common/resource.py'],
+#     # ['modules/*/*.ui', '%%DIRNAME%%/generated/%%FILENAME%%_ui.py'],
+#     # ['modules/*/resources/*.qrc', '%%DIRNAME%%/generated/%%FILENAME%%_rc.py']
+# ])
 
 import sys
 

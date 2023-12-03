@@ -40,5 +40,3 @@ class MoneyCard(QFrame):
         self.contentLabel.setObjectName('contentLabel')
 
         StyleSheet.LINK_CARD.apply(self)
-        # self.view = QWidget(self)
-        # self.view.setStyleSheet("border:1px solid rgb(0, 255, 0);")
