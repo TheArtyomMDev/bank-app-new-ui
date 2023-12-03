@@ -1,10 +1,7 @@
 # coding:utf-8
-import sys
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QStackedWidget, QVBoxLayout, QLabel, QSizePolicy
-
-from qfluentwidgets import Pivot, setTheme, Theme, SegmentedWidget, FluentIcon
+from PyQt5.QtWidgets import QWidget, QStackedWidget, QVBoxLayout
+from qfluentwidgets import SegmentedWidget
 
 from gallery.app.common.style_sheet import StyleSheet
 from login.screens.Email import EmailWidget
@@ -31,22 +28,22 @@ class LoginWindow(QWidget):
         self.email_screen = EmailWidget(on_my_logged)
 
         # add items to pivot
-        self.addSubInterface(self.login_screen, 'login_screen', 'Login')
-        self.addSubInterface(self.signup_screen, 'signup_screen', 'SignUp')
-        self.addSubInterface(self.email_screen, 'email_screen', 'Email')
+        self.add_sub_interface(self.login_screen, 'login_screen', 'Login')
+        self.add_sub_interface(self.signup_screen, 'signup_screen', 'SignUp')
+        self.add_sub_interface(self.email_screen, 'email_screen', 'Email')
 
         self.v_box_layout.addWidget(self.pivot)
         self.v_box_layout.addWidget(self.stacked_widget)
         self.v_box_layout.setContentsMargins(30, 10, 30, 30)
 
-        self.stacked_widget.currentChanged.connect(self.onCurrentIndexChanged)
+        self.stacked_widget.currentChanged.connect(self.on_current_index_changed)
         self.stacked_widget.setCurrentWidget(self.login_screen)
         self.pivot.setCurrentItem(self.login_screen.objectName())
 
         self.setObjectName('view')
         StyleSheet.GALLERY_INTERFACE.apply(self)
 
-    def addSubInterface(self, widget: QWidget, objectName, text):
+    def add_sub_interface(self, widget: QWidget, objectName, text):
         widget.setObjectName(objectName)
 
         self.stacked_widget.addWidget(widget)
@@ -56,6 +53,6 @@ class LoginWindow(QWidget):
             onClick=lambda: self.stacked_widget.setCurrentWidget(widget),
         )
 
-    def onCurrentIndexChanged(self, index):
+    def on_current_index_changed(self, index):
         widget = self.stacked_widget.widget(index)
         self.pivot.setCurrentItem(widget.objectName())
